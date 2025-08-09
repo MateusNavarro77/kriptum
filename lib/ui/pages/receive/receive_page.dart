@@ -8,19 +8,21 @@ import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ReceivePage extends StatelessWidget {
-  const ReceivePage({super.key});
+  final bool onlyReceive;
+  const ReceivePage({super.key, this.onlyReceive = false});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<CurrentAccountCubit>(
       create: (context) => injector.get<CurrentAccountCubit>()..requestCurrentAccount(),
-      child: _ReceiveView(),
+      child: _ReceiveView(onlyReceive: onlyReceive,),
     );
   }
 }
 
 class _ReceiveView extends StatelessWidget {
-  const _ReceiveView();
+  final bool onlyReceive;
+  const _ReceiveView({this.onlyReceive = false});
 
   @override
   Widget build(BuildContext context) {
@@ -64,24 +66,27 @@ class _ReceiveView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        SegmentedButton(
-                            onSelectionChanged: (p0) {
-                              if (p0.isEmpty) return;
-                              if (p0.first == 1) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => ScanQrCodePage(),
-                                  ),
-                                );
-                              }
-                            },
-                            segments: const [
-                              ButtonSegment<int>(value: 1, label: Text('Scan QR code')),
-                              ButtonSegment<int>(value: 2, label: Text('Your QR code'))
-                            ],
-                            selected: const {
-                              2
-                            }),
+                        if (onlyReceive)
+                          SizedBox.shrink()
+                        else
+                          SegmentedButton(
+                              onSelectionChanged: (p0) {
+                                if (p0.isEmpty) return;
+                                if (p0.first == 1) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => ScanQrCodePage(),
+                                    ),
+                                  );
+                                }
+                              },
+                              segments: const [
+                                ButtonSegment<int>(value: 1, label: Text('Scan QR code')),
+                                ButtonSegment<int>(value: 2, label: Text('Your QR code'))
+                              ],
+                              selected: const {
+                                2
+                              }),
                       ],
                     ),
                     const SizedBox(
