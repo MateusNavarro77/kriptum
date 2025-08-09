@@ -187,6 +187,9 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               name: e.token.name ?? '',
                               ticker: e.token.symbol,
                               assetBalance: e.balance.toEther(fractionDigitAmount: 4),
+                              onTap: () {
+                                print('Tapp');
+                              },
                             ),
                           )
                         ],
