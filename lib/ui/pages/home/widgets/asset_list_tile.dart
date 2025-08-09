@@ -11,8 +11,10 @@ class AssetListTile extends StatelessWidget {
   final bool hideBalance;
   final bool loadingBalance;
   final bool errorLoadingBalance;
+  final Function()? onTap;
   const AssetListTile({
     super.key,
+    this.onTap,
     required this.name,
     this.assetIconUrl,
     required this.ticker,
@@ -36,6 +38,7 @@ class AssetListTile extends StatelessWidget {
       trailing = Text('$assetBalance $ticker');
     }
     return ListTile(
+        onTap: onTap,
         leading: Container(
           constraints: BoxConstraints(maxWidth: 45, maxHeight: 45),
           child: Stack(
