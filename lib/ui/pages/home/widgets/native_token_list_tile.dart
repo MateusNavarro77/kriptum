@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/ui/pages/home/widgets/asset_list_tile.dart';
-
+import 'package:kriptum/ui/pages/token/token_page.dart';
 
 class NativeTokenListTile extends StatelessWidget {
   const NativeTokenListTile({super.key});
@@ -33,6 +33,15 @@ class _NativeTokenListTile extends StatelessWidget {
         final assetTicker = state.ticker;
         final assetBalance = state.accountBalance?.toEther(fractionDigitAmount: 4) ?? '0.0000';
         return AssetListTile(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return TokenPage();
+                },
+              ),
+            );
+          },
           name: assetName,
           ticker: assetTicker,
           assetBalance: assetBalance,
