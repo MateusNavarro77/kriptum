@@ -16,6 +16,7 @@ import 'package:kriptum/ui/pages/home/widgets/main_balance_viewer.dart';
 import 'package:kriptum/ui/pages/home/widgets/native_token_list_tile.dart';
 import 'package:kriptum/ui/pages/import_tokens/import_tokens_page.dart';
 import 'package:kriptum/ui/pages/scan_qr_code/scan_qr_code_page.dart';
+import 'package:kriptum/ui/pages/token/token_page.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/networks_list.dart';
 import 'dart:math' as math;
@@ -181,7 +182,17 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                               ),
                             ],
                           ),
-                          NativeTokenListTile(),
+                          NativeTokenListTile(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return TokenPage();
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                           ...tokens.map(
                             (e) => AssetListTile(
                               name: e.token.name ?? '',

@@ -6,7 +6,8 @@ import 'package:kriptum/ui/pages/home/widgets/asset_list_tile.dart';
 import 'package:kriptum/ui/pages/token/token_page.dart';
 
 class NativeTokenListTile extends StatelessWidget {
-  const NativeTokenListTile({super.key});
+  final Function()? onTap;
+  const NativeTokenListTile({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,16 @@ class NativeTokenListTile extends StatelessWidget {
       create: (context) => injector.get<CurrentNativeBalanceBloc>()
         ..add(CurrentNativeBalanceRequested())
         ..add(CurrentNativeBalanceVisibilityRequested()),
-      child: const _NativeTokenListTile(),
+      child: _NativeTokenListTile(
+        onTap: onTap,
+      ),
     );
   }
 }
 
 class _NativeTokenListTile extends StatelessWidget {
-  const _NativeTokenListTile();
+  final Function()? onTap;
+  const _NativeTokenListTile({this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +37,7 @@ class _NativeTokenListTile extends StatelessWidget {
         final assetTicker = state.ticker;
         final assetBalance = state.accountBalance?.toEther(fractionDigitAmount: 4) ?? '0.0000';
         return AssetListTile(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return TokenPage();
-                },
-              ),
-            );
-          },
+          onTap: state.status == CurrentNativeBalanceStatus.loaded ? onTap : null,
           name: assetName,
           ticker: assetTicker,
           assetBalance: assetBalance,
