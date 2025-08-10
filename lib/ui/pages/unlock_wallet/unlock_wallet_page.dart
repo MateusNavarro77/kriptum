@@ -88,6 +88,27 @@ class _UnlockWalletViewState extends State<UnlockWalletView> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withAlpha(50),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                ],
+                                image: const DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('assets/icons/icon.png'),
+                                ),
+                              ),
+                            ),
+                          ),
                           const Text(
                             'Welcome Back!',
                             textAlign: TextAlign.center,
