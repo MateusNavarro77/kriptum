@@ -123,7 +123,8 @@ class _UnlockWalletViewState extends State<UnlockWalletView> {
                             'Wallet won\' unlock? You can ERASE your current wallet and setup a new one',
                             textAlign: TextAlign.center,
                           ),
-                          TextButton(onPressed: () => _showEraseWalletDialog(context), child: const Text('Reset Wallet'))
+                          TextButton(
+                              onPressed: () => _showEraseWalletDialog(context), child: const Text('Reset Wallet'))
                         ],
                       ),
                     ),
