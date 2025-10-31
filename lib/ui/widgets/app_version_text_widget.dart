@@ -24,9 +24,11 @@ class _AppVersionTextWidgetState extends State<AppVersionTextWidget> {
 
   Future<void> _loadAppVersion() async {
     final data = await injector.get<AppVersionProvider>().getAppVersion();
-    setState(() {
-      _appVersion = data;
-    });
+    if (mounted) {
+      setState(() {
+        _appVersion = data;
+      });
+    }
   }
 
   @override
