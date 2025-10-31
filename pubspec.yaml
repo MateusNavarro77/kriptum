@@ -54,6 +54,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   skeletonizer: ^1.4.3
   mobile_scanner: ^7.0.1
+  package_info_plus: ^9.0.0
 
 dev_dependencies:
   flutter_test:

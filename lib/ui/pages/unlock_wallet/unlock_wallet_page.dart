@@ -9,6 +9,7 @@ import 'package:kriptum/ui/pages/splash/splash_page.dart';
 import 'package:kriptum/ui/pages/unlock_wallet/widgets/erase_wallet_dialog.dart';
 
 import 'package:kriptum/ui/tokens/spacings.dart';
+import 'package:kriptum/ui/widgets/app_version_text_widget.dart';
 
 class UnlockWalletPage extends StatelessWidget {
   const UnlockWalletPage({super.key});
@@ -50,82 +51,93 @@ class _UnlockWalletViewState extends State<UnlockWalletView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<UnlockWalletBloc, UnlockWalletState>(
-        listener: (context, state) {
-          if (state is UnlockWalletSuccess) {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => const HomeWrapperPage(),
-              ),
-              (route) => false,
-            );
-          } else if (state is UnlockWalletFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
-            );
-          }
-        },
-        builder: (context, state) {
-          if (state is UnlockWalletInProgress) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (state is UnlockWalletSuccess) {
-            return SizedBox.shrink();
-          }
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: Spacings.horizontalPadding,
-            ),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      'Welcome Back!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            BlocConsumer<UnlockWalletBloc, UnlockWalletState>(
+              listener: (context, state) {
+                if (state is UnlockWalletSuccess) {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => const HomeWrapperPage(),
                     ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    TextFormField(
-                      obscureText: true,
-                      controller: _passwordTextController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        label: Text('Password'),
+                    (route) => false,
+                  );
+                } else if (state is UnlockWalletFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.errorMessage)),
+                  );
+                }
+              },
+              builder: (context, state) {
+                if (state is UnlockWalletInProgress) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is UnlockWalletSuccess) {
+                  return SizedBox.shrink();
+                }
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: Spacings.horizontalPadding,
+                  ),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            'Welcome Back!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            controller: _passwordTextController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              label: Text('Password'),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 32,
+                          ),
+                          FilledButton(
+                              onPressed: () {
+                                context.read<UnlockWalletBloc>().add(
+                                      UnlockWalletRequested(
+                                        _passwordTextController.text,
+                                      ),
+                                    );
+                              },
+                              child: const Text('UNLOCK')),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          const Text(
+                            'Wallet won\' unlock? You can ERASE your current wallet and setup a new one',
+                            textAlign: TextAlign.center,
+                          ),
+                          TextButton(
+                              onPressed: () => _showEraseWalletDialog(context), child: const Text('Reset Wallet'))
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    FilledButton(
-                        onPressed: () {
-                          context.read<UnlockWalletBloc>().add(
-                                UnlockWalletRequested(
-                                  _passwordTextController.text,
-                                ),
-                              );
-                        },
-                        child: const Text('UNLOCK')),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    const Text(
-                      'Wallet won\' unlock? You can ERASE your current wallet and setup a new one',
-                      textAlign: TextAlign.center,
-                    ),
-                    TextButton(onPressed: () => _showEraseWalletDialog(context), child: const Text('Reset Wallet'))
-                  ],
-                ),
-              ),
+                  ),
+                );
+              },
             ),
-          );
-        },
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: AppVersionTextWidget(),
+            )
+          ],
+        ),
       ),
     );
   }
