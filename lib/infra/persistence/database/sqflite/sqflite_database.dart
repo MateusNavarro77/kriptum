@@ -4,7 +4,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 class SqfliteDatabase implements SqlDatabase {
-  static const _dbVersion = 4;
+  static const _dbVersion = 5;
   final _dbFileName = 'kriptum.db';
   sqflite.Database? _database;
   static final SqfliteDatabase _instance = SqfliteDatabase._internal();
