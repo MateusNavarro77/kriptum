@@ -52,3 +52,6 @@ key.properties
 
 #Experimental scripts
 /lab/
+
+#Env file
+.env
