@@ -33,74 +33,76 @@ class _ReceiveView extends StatelessWidget {
         }
         return Scaffold(
           body: SafeArea(
-            child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Spacings.horizontalPadding, vertical: 20),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        const Expanded(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Receive',
-                              style: TextStyle(fontSize: 24),
-                            ),
-                            Text('Network')
-                          ],
-                        )),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: const Icon(Icons.close))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SegmentedButton(
-                            onSelectionChanged: (p0) {
-                              if (p0.isEmpty) return;
-                              if (p0.first == 1) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => ScanQrCodePage(),
-                                  ),
-                                );
-                              }
-                            },
-                            segments: const [
-                              ButtonSegment<int>(value: 1, label: Text('Scan QR code')),
-                              ButtonSegment<int>(value: 2, label: Text('Your QR code'))
+            child: SingleChildScrollView(
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Spacings.horizontalPadding, vertical: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          const Expanded(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Receive',
+                                style: TextStyle(fontSize: 24),
+                              ),
+                              Text('Network')
                             ],
-                            selected: const {
-                              2
-                            }),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: Container(
-                            color: Colors.white,
-                            child: QrImageView(
-                              data: state.account!.address,
-                              version: QrVersions.auto,
-                              size: 250.0,
-                            ),
+                          )),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.close))
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          SegmentedButton(
+                              onSelectionChanged: (p0) {
+                                if (p0.isEmpty) return;
+                                if (p0.first == 1) {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => ScanQrCodePage(),
+                                    ),
+                                  );
+                                }
+                              },
+                              segments: const [
+                                ButtonSegment<int>(value: 1, label: Text('Scan QR code')),
+                                ButtonSegment<int>(value: 2, label: Text('Your QR code'))
+                              ],
+                              selected: const {
+                                2
+                              }),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: Container(
+                          color: Colors.white,
+                          child: QrImageView(
+                            data: state.account!.address,
+                            version: QrVersions.auto,
+                            size: 250.0,
                           ),
-                        )),
-                    Expanded(
-                      child: Column(
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Column(
                         children: [
                           Text(
                             '${state.account?.alias ?? state.account!.accountIndex + 1}',
@@ -135,10 +137,10 @@ class _ReceiveView extends StatelessWidget {
                             icon: const Icon(Icons.copy),
                           )
                         ],
-                      ),
-                    )
-                  ],
-                )),
+                      )
+                    ],
+                  )),
+            ),
           ),
         );
       },
