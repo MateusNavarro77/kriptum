@@ -10,6 +10,8 @@ on:
       - main
       - development
 
+  workflow_call:
+
 jobs:
   test:
     name: Run Flutter Tests
@@ -22,8 +24,8 @@ jobs:
       - name: Set Up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.29.3'
-          channel: 'stable'
+          flutter-version: "3.38.5"
+          channel: "stable"
           cache: true
 
       - name: Install Dependencies
