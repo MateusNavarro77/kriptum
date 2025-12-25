@@ -1,17 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/password.dart';
 import 'package:kriptum/domain/services/account_generator_service.dart';
 import 'package:kriptum/domain/usecases/add_hd_wallet_account_usecase.dart';
-import 'package:kriptum/shared/utils/result.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../mocks/mock_account_generator_service.dart';
 import '../../mocks/mock_accounts_repository.dart';
 import '../../mocks/mock_encryption_service.dart';
 import '../../mocks/mock_mnemonic_repository.dart';
-import '../../mocks/mock_password_factory.dart';
 import '../../mocks/mock_password_repository.dart';
 
 void main() {
@@ -20,7 +17,6 @@ void main() {
   late MockEncryptionService mockEncryptionService;
   late MockAccountGeneratorService mockAccountGeneratorService;
   late MockPasswordRepository mockPasswordRepository;
-  late MockPasswordFactory mockPasswordFactory;
   late MockMnemonicRepository mockMnemonicRepository;
 
   setUpAll(() {
@@ -36,7 +32,6 @@ void main() {
     mockEncryptionService = MockEncryptionService();
     mockAccountGeneratorService = MockAccountGeneratorService();
     mockPasswordRepository = MockPasswordRepository();
-    mockPasswordFactory = MockPasswordFactory();
     mockMnemonicRepository = MockMnemonicRepository();
 
     sut = AddHdWalletAccountUsecase(
@@ -44,7 +39,6 @@ void main() {
       mockEncryptionService,
       mockAccountGeneratorService,
       mockPasswordRepository,
-      mockPasswordFactory,
       mockMnemonicRepository,
     );
   });
@@ -62,7 +56,6 @@ void main() {
 
     void arrangeSuccess() {
       when(() => mockPasswordRepository.getPassword()).thenReturn(validPassword);
-      when(() => mockPasswordFactory.create(validPassword)).thenReturn(Result.success(Password(validPassword)));
       when(() => mockMnemonicRepository.retrieveEncryptedMnemonic()).thenAnswer((_) async => encryptedMnemonic);
       when(() => mockEncryptionService.decrypt(
             encryptedData: encryptedMnemonic,
@@ -83,14 +76,13 @@ void main() {
 
     test('should throw DomainException when password validation fails', () {
       when(() => mockPasswordRepository.getPassword()).thenReturn('invalid');
-      when(() => mockPasswordFactory.create('invalid')).thenReturn(Result.failure('Invalid password'));
 
       expect(
         () => sut.execute(),
         throwsA(isA<DomainException>().having(
           (e) => e.getReason(),
           'reason',
-          'Invalid password',
+          'Password must be at least 8 characters long',
         )),
       );
 
@@ -100,7 +92,6 @@ void main() {
 
     test('should throw an exception when decryption fails', () {
       when(() => mockPasswordRepository.getPassword()).thenReturn(validPassword);
-      when(() => mockPasswordFactory.create(validPassword)).thenReturn(Result.success(Password(validPassword)));
       when(() => mockMnemonicRepository.retrieveEncryptedMnemonic()).thenAnswer((_) async => encryptedMnemonic);
       when(() => mockEncryptionService.decrypt(
             encryptedData: encryptedMnemonic,

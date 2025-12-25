@@ -1,29 +1,27 @@
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
-import 'package:kriptum/domain/factories/password_factory.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/mnemonic_repository.dart';
 import 'package:kriptum/domain/repositories/password_repository.dart';
 import 'package:kriptum/domain/services/account_generator_service.dart';
 import 'package:kriptum/domain/services/encryption_service.dart';
+import 'package:kriptum/domain/value_objects/password.dart';
 
 class AddHdWalletAccountUsecase {
   final AccountsRepository _accountsRepository;
   final EncryptionService _encryptionService;
   final AccountGeneratorService _accountGeneratorService;
   final PasswordRepository _passwordRepository;
-  final PasswordFactory _passwordFactory;
   final MnemonicRepository _mnemonicRepository;
   AddHdWalletAccountUsecase(
     this._accountsRepository,
     this._encryptionService,
     this._accountGeneratorService,
     this._passwordRepository,
-    this._passwordFactory,
     this._mnemonicRepository,
   );
   Future<void> execute() async {
     final storedInMemoryPassword = _passwordRepository.getPassword();
-    final passwordValidationResult = _passwordFactory.create(storedInMemoryPassword);
+    final passwordValidationResult = Password.create(storedInMemoryPassword);
     if (passwordValidationResult.isFailure) {
       throw DomainException(passwordValidationResult.failure!);
     }
