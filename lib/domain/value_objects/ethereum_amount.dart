@@ -10,6 +10,12 @@ class EthereumAmount implements Comparable<EthereumAmount> {
   }
 
   factory EthereumAmount.fromEtherDecimal(String ether) {
+    if (ether.contains(',')) {
+      ether = ether.replaceAll(',', '.');
+    }
+    if (ether.startsWith('.')) {
+      throw ArgumentError('Cannot start with .');
+    }
     final parts = ether.split('.');
     final integerPart = BigInt.parse(parts[0]);
 
