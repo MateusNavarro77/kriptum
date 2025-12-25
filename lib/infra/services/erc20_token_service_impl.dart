@@ -54,9 +54,8 @@ class Erc20TokenServiceImpl implements Erc20TokenService {
       if (result.isNotEmpty) {
         return result.first as T;
       }
-    } catch (e) {
-      print('Error calling $functionName: $e');
-    }
+      // ignore: empty_catches
+    } catch (e) {}
     return null;
   }
 

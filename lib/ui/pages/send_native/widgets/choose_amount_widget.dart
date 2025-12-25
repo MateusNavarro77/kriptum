@@ -5,7 +5,7 @@ import 'package:kriptum/blocs/current_network/current_network_cubit.dart';
 import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc.dart';
 import 'package:kriptum/blocs/send_transaction/send_transaction_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/send_native/widgets/page_title.dart';
 import 'package:kriptum/ui/tokens/placeholders.dart';
@@ -49,7 +49,7 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
       (_) {
         final sendTransactionBloc = context.read<SendTransactionBloc>();
         _amountTextEditingController.text =
-            EtherAmount(valueInWei: sendTransactionBloc.state.amount ?? BigInt.from(0)).toEther();
+            EthereumAmount.fromWei(sendTransactionBloc.state.amount ?? BigInt.from(0)).toEtherString(decimals: 2);
       },
     );
     super.initState();
@@ -149,7 +149,7 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
               if (ticker.isEmpty || balanceBloc.state.accountBalance == null) {
                 return Skeletonizer(child: Text(Placeholders.hiddenBalancePlaceholder));
               }
-              return Text('Balance: ${balanceBloc.state.accountBalance?.toEther()} $ticker');
+              return Text('Balance: ${balanceBloc.state.accountBalance?.toEtherString(decimals: 2)} $ticker');
             }),
             // 'Balance: ${formatEther(accountBalanceController.balance)} ${currentNetworkController.currentConnectedNetwork?.ticker}'),
             Expanded(child: Container()),
@@ -196,7 +196,7 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
     final balanceBloc = context.read<CurrentNativeBalanceBloc>();
     final balance = balanceBloc.state.accountBalance;
     if (balance != null) {
-      _amountTextEditingController.text = balance.toEther();
+      _amountTextEditingController.text = balance.toEtherString(decimals: 2);
     }
     // amountTextEditingController.text =
     //     formatEther(accountBalanceController.balance);

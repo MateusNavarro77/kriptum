@@ -39,7 +39,7 @@ class Erc20TokensState {
 
 class Erc20TokenWithBalance {
   final Erc20Token token;
-  final EtherAmount balance;
+  final EthereumAmount balance;
 
   Erc20TokenWithBalance({
     required this.token,

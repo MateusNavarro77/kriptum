@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:kriptum/domain/models/ether_amount.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 
 import 'package:kriptum/infra/datasources/data_sources.dart';
 import 'package:web3dart/web3dart.dart' as web3;
@@ -14,7 +14,7 @@ class Erc20TokenBalanceDataSourceImpl implements Erc20TokenBalanceDataSource {
   Erc20TokenBalanceDataSourceImpl(this._httpClient);
 
   @override
-  Future<EtherAmount> getErc20BalanceOfAccount({
+  Future<EthereumAmount> getErc20BalanceOfAccount({
     required String accountAddress,
     required String contractAddress,
     required String networkRpcUrl,
@@ -34,6 +34,6 @@ class Erc20TokenBalanceDataSourceImpl implements Erc20TokenBalanceDataSource {
       params: [address],
     );
     final balance = result.first as BigInt;
-    return EtherAmount(valueInWei: balance);
+    return EthereumAmount.fromWei(balance);
   }
 }

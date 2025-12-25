@@ -1,9 +1,9 @@
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/erc20_token_balance_repository.dart';
 import 'package:kriptum/domain/repositories/erc20_token_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 
 class GetErc20BalancesUsecase {
   final AccountsRepository _accountsRepository;
@@ -25,7 +25,7 @@ class GetErc20BalancesUsecase {
       throw DomainException('Invalid Account state');
     }
     final importedTokens = await _erc20tokenRepository.getAllImportedTokensOfNetwork(currentNetwork.id!);
-    final List<Future<EtherAmount>> requests = [];
+    final List<Future<EthereumAmount>> requests = [];
 
     for (var importedToken in importedTokens) {
       requests.add(
@@ -37,7 +37,7 @@ class GetErc20BalancesUsecase {
       );
     }
     final results = await Future.wait(requests);
-    final Map<String, EtherAmount> balancesMap = {};
+    final Map<String, EthereumAmount> balancesMap = {};
     for (int i = 0; i < importedTokens.length; i++) {
       balancesMap[importedTokens[i].address] = results[i];
     }
@@ -46,7 +46,7 @@ class GetErc20BalancesUsecase {
 }
 
 class GetErc20BalancesOutput {
-  final Map<String, EtherAmount> balanceOf;
+  final Map<String, EthereumAmount> balanceOf;
 
   const GetErc20BalancesOutput({required this.balanceOf});
 }

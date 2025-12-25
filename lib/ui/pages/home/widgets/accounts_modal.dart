@@ -7,7 +7,7 @@ import 'package:kriptum/blocs/current_account/current_account_cubit.dart';
 import 'package:kriptum/blocs/current_network/current_network_cubit.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/edit_account/edit_account_page.dart';
 import 'package:kriptum/ui/pages/import_account_from_private_key/import_account_from_private_key_page.dart';
@@ -70,7 +70,7 @@ class _AccountsModalView extends StatelessWidget {
             if (currentNetworkState is CurrentNetworkLoaded) {
               ticker = currentNetworkState.network.ticker;
             }
-            Map<String, EtherAmount> balanceOf = {};
+            Map<String, EthereumAmount> balanceOf = {};
             if (balancesState is BalancesLoaded) {
               balanceOf = balancesState.balanceOf;
             }

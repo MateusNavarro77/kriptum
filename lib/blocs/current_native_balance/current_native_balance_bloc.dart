@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
 import 'package:kriptum/domain/usecases/get_native_balance_of_connected_account_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/infra/persistence/user_preferences/user_preferences.dart';
 
 part 'current_native_balance_event.dart';

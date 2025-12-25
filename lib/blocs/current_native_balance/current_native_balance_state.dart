@@ -10,7 +10,7 @@ enum CurrentNativeBalanceStatus {
 
 class CurrentNativeBalanceState {
   final bool isVisible;
-  final EtherAmount? accountBalance;
+  final EthereumAmount? accountBalance;
   final String? errorMessage;
   final CurrentNativeBalanceStatus status;
   final String ticker;
@@ -32,7 +32,7 @@ class CurrentNativeBalanceState {
 
   CurrentNativeBalanceState copyWith({
     bool? isVisible,
-    EtherAmount? accountBalance,
+    EthereumAmount? accountBalance,
     String? errorMessage,
     CurrentNativeBalanceStatus? status,
     String? ticker,

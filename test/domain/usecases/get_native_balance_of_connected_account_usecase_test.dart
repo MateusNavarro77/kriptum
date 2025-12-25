@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
 
 import 'package:kriptum/domain/usecases/get_native_balance_of_connected_account_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../mocks/mock_accounts_repository.dart';
@@ -47,7 +47,7 @@ void main() {
       ticker: 'TEST',
       currencyDecimals: 18,
     );
-    final testBalance = EtherAmount(valueInWei: BigInt.from(5000));
+    final testBalance = EthereumAmount.fromWei(BigInt.from(5000));
 
     test('should return the native balance of the current account', () async {
       when(() => mockAccountsRepository.getCurrentAccount()).thenAnswer((_) async => testAccount);

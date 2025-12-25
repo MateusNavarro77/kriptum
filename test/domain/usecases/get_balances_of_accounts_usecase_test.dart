@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/usecases/get_balances_of_accounts_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../mocks/mock_accounts_repository.dart';
@@ -47,8 +47,8 @@ void main() {
     ];
 
     final testBalances = [
-      EtherAmount(valueInWei: BigInt.from(1000)),
-      EtherAmount(valueInWei: BigInt.from(2000)),
+      EthereumAmount.fromWei(BigInt.from(1000)),
+      EthereumAmount.fromWei(BigInt.from(2000)),
     ];
 
     test('should return a map of account balances when successful', () async {

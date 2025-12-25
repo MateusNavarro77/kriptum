@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/import_token/import_token_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
-import 'package:kriptum/domain/factories/ethereum_address/ethereum_address.dart';
+import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/ethereum_address_text_field.dart';
@@ -33,14 +33,13 @@ class _ImportTokensPageState extends State<_ImportTokensPage> {
   final _tokenSymbolTextFieldController = TextEditingController();
   final _tokenDecimalsTextFieldController = TextEditingController();
   final ValueNotifier<bool> _isValidTokenAddressNotifier = ValueNotifier(false);
-  final _ethereumAddressFactory = injector.get<EthereumAddressFactory>();
 
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _tokenAddressTextFieldController.addListener(
         () {
-          final result = _ethereumAddressFactory.create(_tokenAddressTextFieldController.text);
+          final result = EthereumAddress.create(_tokenAddressTextFieldController.text);
           if (result.isSuccess) {
             _isValidTokenAddressNotifier.value = true;
             context.read<ImportTokenBloc>().add(

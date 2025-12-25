@@ -31,7 +31,7 @@ class _NativeTokenListTile extends StatelessWidget {
         if (!isVisible) {
           content = Text(Placeholders.hiddenBalancePlaceholder);
         } else if (isVisible && state.accountBalance != null) {
-          content = Text('${state.accountBalance?.toEther()} ${state.ticker}');
+          content = Text('${state.accountBalance?.toEtherString(decimals: 2)} ${state.ticker}');
         } else {
           content = Skeletonizer(child: Text(Placeholders.hiddenBalancePlaceholder));
         }

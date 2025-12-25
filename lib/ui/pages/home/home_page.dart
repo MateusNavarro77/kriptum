@@ -184,7 +184,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                           ...tokens.map((e) => ListTile(
                                 title: Text(e.token.name ?? ''),
                                 subtitle: Text(e.token.symbol),
-                                trailing: Text('${e.balance.toEther()} ${e.token.symbol}'),
+                                trailing: Text('${e.balance.toEtherString(decimals: 2)} ${e.token.symbol}'),
                               ))
                         ],
                       );

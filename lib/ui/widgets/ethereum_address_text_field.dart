@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kriptum/config/di/injector.dart';
-import 'package:kriptum/domain/factories/ethereum_address/ethereum_address.dart';
+import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address.dart';
 import 'package:kriptum/ui/pages/scan_qr_code/scan_qr_code_page.dart';
 
 class EthereumAddressTextField extends StatelessWidget {
@@ -23,7 +22,7 @@ class EthereumAddressTextField extends StatelessWidget {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: controller,
       validator: (value) {
-        final result = injector.get<EthereumAddressFactory>().create(value ?? '');
+        final result = EthereumAddress.create(value ?? '');
         if (result.isFailure) {
           return result.failure;
         }

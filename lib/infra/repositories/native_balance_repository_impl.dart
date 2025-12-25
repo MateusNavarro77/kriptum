@@ -1,6 +1,6 @@
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/native_balance_repository.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/infra/caching/cache.dart';
 import 'package:kriptum/infra/datasources/data_sources.dart';
 
@@ -10,7 +10,7 @@ class NativeBalanceRepositoryImpl implements NativeBalanceRepository {
   NativeBalanceRepositoryImpl(this._nativeBalanceDataSource, this._cache);
 
   @override
-  Future<EtherAmount> getNativeBalanceOfAccount({
+  Future<EthereumAmount> getNativeBalanceOfAccount({
     required String accountAddress,
     required Network network,
     bool invalidateCache = false,
@@ -19,7 +19,7 @@ class NativeBalanceRepositoryImpl implements NativeBalanceRepository {
     if (invalidateCache) {
       _cache.remove(cacheKey);
     }
-    final cachedBalance = _cache.get<EtherAmount>(cacheKey);
+    final cachedBalance = _cache.get<EthereumAmount>(cacheKey);
     if (cachedBalance != null) return cachedBalance;
 
     final balance = await _nativeBalanceDataSource.getNativeBalanceOfAccount(
