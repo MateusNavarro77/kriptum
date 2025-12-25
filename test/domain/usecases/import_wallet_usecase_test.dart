@@ -11,7 +11,6 @@ import '../../mocks/mock_password_repository.dart';
 
 class MockAccountGeneratorService extends Mock implements AccountGeneratorService {}
 
-
 void main() {
   late ImportWalletUsecase sut;
   late MockAccountGeneratorService mockAccountGeneratorService;
@@ -59,7 +58,6 @@ void main() {
   test(
     'Should successfully import wallet',
     () async {
-      
       when(
         () => mockEncryptionService.encrypt(
           data: any(named: 'data'),

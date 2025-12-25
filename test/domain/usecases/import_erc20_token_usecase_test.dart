@@ -81,7 +81,8 @@ void main() {
 
       expect(
         () => sut.execute(invalidInput),
-        throwsA(isA<DomainException>().having((e) => e.getReason(), 'reason', 'Ethereum address must be 42 characters long')),
+        throwsA(isA<DomainException>()
+            .having((e) => e.getReason(), 'reason', 'Ethereum address must be 42 characters long')),
       );
       verifyNever(() => mockErc20tokenRepository.save(any()));
     });

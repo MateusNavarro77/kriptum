@@ -21,7 +21,6 @@ class Mnemonic {
     final errorReason = _validate(phrase);
     if (errorReason != null) {
       return Result.failure(errorReason);
-      
     }
     return Result.success(Mnemonic._(phrase));
   }

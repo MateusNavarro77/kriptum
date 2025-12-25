@@ -21,8 +21,6 @@ class MockEthereumAddressValidator implements EthereumAddressValidator {
   bool validate(String address) => validationLogic(address);
 }
 
-
-
 void main() {
   late SearchErc20TokenMetadataUsecase sut;
   late MockErc20TokenService mockErc20TokenService;
@@ -54,7 +52,6 @@ void main() {
 
   group('SearchErc20TokenMetadataUsecase', () {
     test('should return token metadata on successful fetch', () async {
-     
       when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
       when(() => mockErc20TokenService.getName(address: any(named: 'address'), rpcUrl: any(named: 'rpcUrl')))
           .thenAnswer((_) async => 'Test Token');
@@ -84,7 +81,8 @@ void main() {
 
       expect(
         () => sut.execute(invalidInput),
-        throwsA(isA<DomainException>().having((e) => e.getReason(), 'reason', 'Ethereum address must be 42 characters long')),
+        throwsA(isA<DomainException>()
+            .having((e) => e.getReason(), 'reason', 'Ethereum address must be 42 characters long')),
       );
 
       verifyNever(() => mockNetworksRepository.getCurrentNetwork());
@@ -93,7 +91,7 @@ void main() {
 
     test('should propagate exception if token service fails', () {
       final testException = Exception('RPC Error');
-      
+
       when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
       when(() => mockErc20TokenService.getName(address: any(named: 'address'), rpcUrl: any(named: 'rpcUrl')))
           .thenThrow(testException);
