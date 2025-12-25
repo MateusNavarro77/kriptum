@@ -193,7 +193,7 @@ class _ChooseRecipientWidgetState extends State<_ChooseRecipientWidget> {
                                   content = '........';
                                   break;
                                 case CurrentNativeBalanceStatus.loaded:
-                                  content = '${state.accountBalance?.toEther(fractionDigitAmount: 5)} ${state.ticker}';
+                                  content = '${state.accountBalance?.toEtherString(decimals: 5)} ${state.ticker}';
                                   break;
                                 case CurrentNativeBalanceStatus.error:
                                   content = 'error';

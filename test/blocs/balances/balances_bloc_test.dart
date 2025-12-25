@@ -3,11 +3,11 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/blocs/balances/balances_bloc.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
 import 'package:kriptum/domain/usecases/get_balances_of_accounts_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockGetBalancesOfAccountsUsecase extends Mock implements GetBalancesOfAccountsUsecase {}
@@ -28,7 +28,7 @@ void main() {
   late StreamController<Network> networkStreamController;
   late StreamController<List<Account>> accountsStreamController;
 
-  final testBalances = {'0xAddress1': EtherAmount(valueInWei: BigInt.from(100))};
+  final testBalances = {'0xAddress1': EthereumAmount.fromWei(BigInt.from(100))};
 
   setUpAll(() {
     registerFallbackValue(FakeNetwork());

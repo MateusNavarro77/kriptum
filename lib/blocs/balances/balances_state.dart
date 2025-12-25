@@ -13,7 +13,7 @@ final class BalancesError extends BalancesState {
 }
 
 final class BalancesLoaded extends BalancesState {
-  final Map<String, EtherAmount> balanceOf;
+  final Map<String, EthereumAmount> balanceOf;
 
   BalancesLoaded({required this.balanceOf});
 }

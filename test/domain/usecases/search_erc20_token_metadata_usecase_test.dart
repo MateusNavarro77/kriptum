@@ -1,30 +1,32 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
-import 'package:kriptum/domain/factories/ethereum_address/ethereum_address.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
 import 'package:kriptum/domain/services/erc20_token_service.dart';
 import 'package:kriptum/domain/usecases/search_erc20_token_metadata_usecase.dart';
-import 'package:kriptum/shared/utils/result.dart';
+import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address.dart';
+import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address_validator.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockErc20TokenService extends Mock implements Erc20TokenService {}
 
 class MockNetworksRepository extends Mock implements NetworksRepository {}
 
-class MockEthereumAddressFactory extends Mock implements EthereumAddressFactory {}
+class MockEthereumAddressValidator implements EthereumAddressValidator {
+  final bool Function(String) validationLogic;
 
-class FakeEthereumAddressVO extends Fake implements EthereumAddressVO {
+  MockEthereumAddressValidator({required this.validationLogic});
+
   @override
-  final String value;
-  FakeEthereumAddressVO(this.value);
+  bool validate(String address) => validationLogic(address);
 }
+
+
 
 void main() {
   late SearchErc20TokenMetadataUsecase sut;
   late MockErc20TokenService mockErc20TokenService;
   late MockNetworksRepository mockNetworksRepository;
-  late MockEthereumAddressFactory mockEthereumAddressFactory;
 
   final testInput = SearchErc20TokenMetadataInput(
     contractAddress: '0x1234567890123456789012345678901234567890',
@@ -35,20 +37,24 @@ void main() {
   setUp(() {
     mockErc20TokenService = MockErc20TokenService();
     mockNetworksRepository = MockNetworksRepository();
-    mockEthereumAddressFactory = MockEthereumAddressFactory();
+
+    // Set up the Ethereum address validator
+    final mockValidator = MockEthereumAddressValidator(
+      validationLogic: (address) {
+        return RegExp(r'^0x[a-fA-F0-9]{40}$').hasMatch(address);
+      },
+    );
+    EthereumAddress.setExternalValidator(mockValidator);
 
     sut = SearchErc20TokenMetadataUsecase(
       mockErc20TokenService,
       mockNetworksRepository,
-      mockEthereumAddressFactory,
     );
   });
 
   group('SearchErc20TokenMetadataUsecase', () {
     test('should return token metadata on successful fetch', () async {
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(
-        Result.success(FakeEthereumAddressVO(testInput.contractAddress)),
-      );
+     
       when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
       when(() => mockErc20TokenService.getName(address: any(named: 'address'), rpcUrl: any(named: 'rpcUrl')))
           .thenAnswer((_) async => 'Test Token');
@@ -72,11 +78,13 @@ void main() {
     });
 
     test('should throw DomainException if address validation fails', () {
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(Result.failure('Invalid address'));
+      final invalidInput = SearchErc20TokenMetadataInput(
+        contractAddress: 'invalid_address',
+      );
 
       expect(
-        () => sut.execute(testInput),
-        throwsA(isA<DomainException>().having((e) => e.getReason(), 'reason', 'Invalid address')),
+        () => sut.execute(invalidInput),
+        throwsA(isA<DomainException>().having((e) => e.getReason(), 'reason', 'Ethereum address must be 42 characters long')),
       );
 
       verifyNever(() => mockNetworksRepository.getCurrentNetwork());
@@ -85,9 +93,7 @@ void main() {
 
     test('should propagate exception if token service fails', () {
       final testException = Exception('RPC Error');
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(
-        Result.success(FakeEthereumAddressVO(testInput.contractAddress)),
-      );
+      
       when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
       when(() => mockErc20TokenService.getName(address: any(named: 'address'), rpcUrl: any(named: 'rpcUrl')))
           .thenThrow(testException);

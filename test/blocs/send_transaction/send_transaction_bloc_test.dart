@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/blocs/send_transaction/send_transaction_bloc.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/usecases/get_native_balance_of_connected_account_usecase.dart';
 import 'package:kriptum/domain/usecases/send_transaction_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/shared/utils/convert_string_eth_to_wei.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -121,7 +121,7 @@ void main() {
       blocTest<SendTransactionBloc, SendTransactionState>(
         'emits [loading, success] when balance is sufficient',
         build: () {
-          final userBalance = EtherAmount(valueInWei: BigInt.parse('1000000000000000000')); // 1 ETH
+          final userBalance = EthereumAmount.fromWei(BigInt.parse('1000000000000000000')); // 1 ETH
           when(() => mockGetNativeBalanceOfConnectedAccountUsecase.execute()).thenAnswer((_) async => userBalance);
           return sendTransactionBloc;
         },
@@ -140,7 +140,7 @@ void main() {
       blocTest<SendTransactionBloc, SendTransactionState>(
         'emits [loading, error] when balance is insufficient',
         build: () {
-          final userBalance = EtherAmount(valueInWei: BigInt.from(1000)); // 1000 wei
+          final userBalance = EthereumAmount.fromWei(BigInt.from(1000)); // 1000 wei
           when(() => mockGetNativeBalanceOfConnectedAccountUsecase.execute()).thenAnswer((_) async => userBalance);
           return sendTransactionBloc;
         },

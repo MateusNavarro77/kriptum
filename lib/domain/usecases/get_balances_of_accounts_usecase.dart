@@ -1,7 +1,7 @@
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/native_balance_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 
 class GetBalancesOfAccountsUsecase {
   final AccountsRepository _accountsRepository;
@@ -13,11 +13,11 @@ class GetBalancesOfAccountsUsecase {
     this._networksRepository,
   );
 
-  Future<Map<String, EtherAmount>> execute() async {
+  Future<Map<String, EthereumAmount>> execute() async {
     final accounts = await _accountsRepository.getAccounts();
     final currentNetwork = await _networksRepository.getCurrentNetwork();
-    final Map<String, EtherAmount> balanceOf = {};
-    final List<Future<EtherAmount>> requests = [];
+    final Map<String, EthereumAmount> balanceOf = {};
+    final List<Future<EthereumAmount>> requests = [];
     for (final account in accounts) {
       requests.add(
         _nativeBalanceRepository.getNativeBalanceOfAccount(

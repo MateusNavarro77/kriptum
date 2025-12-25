@@ -3,11 +3,11 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
 import 'package:kriptum/domain/usecases/get_native_balance_of_connected_account_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/infra/persistence/user_preferences/user_preferences.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -33,7 +33,7 @@ void main() {
   late StreamController<Network> networkStreamController;
   late StreamController<bool> visibilityStreamController;
   final testNetwork = Network(id: 1, name: 'Testnet', rpcUrl: '', ticker: 'TEST', currencyDecimals: 18);
-  final testBalance = EtherAmount(valueInWei: BigInt.from(1000));
+  final testBalance = EthereumAmount.fromWei(BigInt.from(1000));
 
   setUpAll(() {
     registerFallbackValue(FakeAccount());

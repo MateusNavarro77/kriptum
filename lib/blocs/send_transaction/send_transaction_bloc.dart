@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/usecases/get_native_balance_of_connected_account_usecase.dart';
 import 'package:kriptum/domain/usecases/send_transaction_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/shared/utils/convert_string_eth_to_wei.dart';
 
 part 'send_transaction_event.dart';
@@ -87,10 +87,10 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
       );
 
       final bigintAmount = convertStringEthToWei(event.amount);
-      final amount = EtherAmount(valueInWei: bigintAmount);
+      final amount = EthereumAmount.fromWei(bigintAmount);
       final currentBalance = await _getNativeBalanceOfAccountUsecase.execute();
 
-      if (amount.valueInWei > currentBalance.valueInWei) {
+      if (amount > currentBalance) {
         emit(
           state.copyWith(
             errorMessage: 'Not enough balance',

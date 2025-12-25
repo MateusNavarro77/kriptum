@@ -57,3 +57,4 @@ key.properties
 .env
 
 android/build
+test/test_bundle

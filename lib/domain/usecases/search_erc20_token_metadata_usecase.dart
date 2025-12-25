@@ -1,16 +1,15 @@
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
-import 'package:kriptum/domain/factories/ethereum_address/ethereum_address.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
 import 'package:kriptum/domain/services/erc20_token_service.dart';
+import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address.dart';
 
 class SearchErc20TokenMetadataUsecase {
   final Erc20TokenService _erc20tokenService;
   final NetworksRepository _networksRepository;
-  final EthereumAddressFactory _ethereumAddressFactory;
 
-  SearchErc20TokenMetadataUsecase(this._erc20tokenService, this._networksRepository, this._ethereumAddressFactory);
+  SearchErc20TokenMetadataUsecase(this._erc20tokenService, this._networksRepository);
   Future<SearchErc20TokenMetadataOutput> execute(SearchErc20TokenMetadataInput input) async {
-    final ethAddressResult = _ethereumAddressFactory.create(input.contractAddress);
+    final ethAddressResult = EthereumAddress.create(input.contractAddress);
     if (ethAddressResult.isFailure) {
       throw DomainException(ethAddressResult.failure!);
     }

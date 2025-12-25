@@ -6,7 +6,7 @@ import 'package:kriptum/blocs/current_network/current_network_cubit.dart';
 import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc.dart';
 import 'package:kriptum/blocs/send_transaction/send_transaction_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/send_native/widgets/page_title.dart';
@@ -104,7 +104,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                       if (ticker.isEmpty || balance == null) return SizedBox.shrink();
                       return Text(
                           //'${formatEther(accountBalanceController.balance)} ${currentNetworkController.currentConnectedNetwork?.ticker}',
-                          '${balance.toEther()} $ticker',
+                          '${balance.toEtherString(decimals: 2)} $ticker',
                           style: Theme.of(context).textTheme.bodyLarge);
                     }),
                     leading: BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
@@ -198,7 +198,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                     }
 
                     return Text(
-                      '${EtherAmount(valueInWei: amount).toEther()} \n $ticker',
+                      '${EthereumAmount.fromWei(amount).toEtherString(decimals: 2)} \n $ticker',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.displayMedium,
                     );

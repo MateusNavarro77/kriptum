@@ -1,6 +1,6 @@
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/erc20_token_balance_repository.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/infra/datasources/data_sources.dart';
 
 class Erc20TokenBalanceRepositoryImpl implements Erc20TokenBalanceRepository {
@@ -8,7 +8,7 @@ class Erc20TokenBalanceRepositoryImpl implements Erc20TokenBalanceRepository {
 
   Erc20TokenBalanceRepositoryImpl(this._erc20tokenBalanceDataSource);
   @override
-  Future<EtherAmount> getBalance({
+  Future<EthereumAmount> getBalance({
     required String erc20ContractAddress,
     required String accountAddress,
     required Network network,

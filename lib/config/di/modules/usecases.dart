@@ -104,12 +104,10 @@ Future<void> registerUsecases() async {
     () => SearchErc20TokenMetadataUsecase(
       injector.get(),
       injector.get(),
-      injector.get(),
     ),
   );
   injector.registerLazySingleton<ImportErc20TokenUsecase>(
     () => ImportErc20TokenUsecase(
-      injector.get(),
       injector.get(),
       injector.get(),
     ),

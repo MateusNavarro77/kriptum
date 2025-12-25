@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jazzicon/jazzicon.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
 
 class AccountTileWidget extends StatelessWidget {
@@ -10,7 +10,7 @@ class AccountTileWidget extends StatelessWidget {
   final bool includeMenu;
   final bool isSelected;
   final Account account;
-  final EtherAmount? balance;
+  final EthereumAmount? balance;
   final String ticker;
   const AccountTileWidget({
     super.key,
@@ -60,7 +60,7 @@ class AccountTileWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '${balance?.toEther(fractionDigitAmount: 5)} $ticker',
+                  '${balance?.toEtherString(decimals: 5)} $ticker',
                   overflow: TextOverflow.ellipsis,
                   softWrap: false,
                   style: Theme.of(context).textTheme.bodySmall,

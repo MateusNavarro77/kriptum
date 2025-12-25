@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kriptum/domain/models/account.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:kriptum/shared/utils/copy_to_clipboard.dart';
 import 'package:kriptum/shared/utils/extensions/date_time_extension.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
@@ -152,7 +152,7 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                     contentPadding: EdgeInsets.zero,
                     title: const Text('Amount'),
                     trailing: Text(
-                      '${EtherAmount(valueInWei: widget.amount).toEther()} ${widget.network.ticker}',
+                      '${EthereumAmount.fromWei(widget.amount).toEtherString(decimals: 2)} ${widget.network.ticker}',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                   ),

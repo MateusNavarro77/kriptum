@@ -2,13 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
 import 'package:kriptum/domain/models/account.dart';
 import 'package:kriptum/domain/models/erc20_token.dart';
-import 'package:kriptum/domain/models/ether_amount.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/erc20_token_balance_repository.dart';
 import 'package:kriptum/domain/repositories/erc20_token_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
 import 'package:kriptum/domain/usecases/get_erc20_balances_usecase.dart';
+import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAccountsRepository extends Mock implements AccountsRepository {}
@@ -35,8 +35,8 @@ void main() {
     Erc20Token(address: '0xToken2', name: 'Token Two', symbol: 'TKN2', decimals: 6, networkId: 1),
   ];
   final testBalances = [
-    EtherAmount(valueInWei: BigInt.from(1000)),
-    EtherAmount(valueInWei: BigInt.from(2000)),
+    EthereumAmount.fromWei(BigInt.from(1000)),
+    EthereumAmount.fromWei(BigInt.from(2000)),
   ];
 
   setUpAll(() {

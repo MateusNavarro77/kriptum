@@ -52,7 +52,7 @@ class _MainBalanceViewer extends StatelessWidget {
           content = 'Loading...';
           break;
         case CurrentNativeBalanceStatus.loaded:
-          content = nativeBalanceState.accountBalance!.toEther();
+          content = nativeBalanceState.accountBalance!.toEtherString(decimals: 5);
           break;
       }
       bool isVisible = nativeBalanceState.isVisible;

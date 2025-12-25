@@ -1,34 +1,33 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
-import 'package:kriptum/domain/factories/ethereum_address/ethereum_address.dart';
 import 'package:kriptum/domain/models/erc20_token.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/erc20_token_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
 import 'package:kriptum/domain/usecases/import_erc20_token_usecase.dart';
-import 'package:kriptum/shared/utils/result.dart';
+import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address.dart';
+import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address_validator.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockNetworksRepository extends Mock implements NetworksRepository {}
 
 class MockErc20TokenRepository extends Mock implements Erc20TokenRepository {}
 
-class MockEthereumAddressFactory extends Mock implements EthereumAddressFactory {}
-
 class FakeErc20Token extends Fake implements Erc20Token {}
 
-class FakeEthereumAddressVO extends Fake implements EthereumAddressVO {
-  @override
-  final String value;
+class MockEthereumAddressValidator implements EthereumAddressValidator {
+  final bool Function(String) validationLogic;
 
-  FakeEthereumAddressVO(this.value);
+  MockEthereumAddressValidator({required this.validationLogic});
+
+  @override
+  bool validate(String address) => validationLogic(address);
 }
 
 void main() {
   late ImportErc20TokenUsecase sut;
   late MockNetworksRepository mockNetworksRepository;
   late MockErc20TokenRepository mockErc20tokenRepository;
-  late MockEthereumAddressFactory mockEthereumAddressFactory;
 
   final validInput = ImportErc20TokenInput(
     name: 'Test Token',
@@ -46,20 +45,23 @@ void main() {
   setUp(() {
     mockNetworksRepository = MockNetworksRepository();
     mockErc20tokenRepository = MockErc20TokenRepository();
-    mockEthereumAddressFactory = MockEthereumAddressFactory();
+
+    // Set up the Ethereum address validator
+    final mockValidator = MockEthereumAddressValidator(
+      validationLogic: (address) {
+        return RegExp(r'^0x[a-fA-F0-9]{40}$').hasMatch(address);
+      },
+    );
+    EthereumAddress.setExternalValidator(mockValidator);
 
     sut = ImportErc20TokenUsecase(
       mockNetworksRepository,
       mockErc20tokenRepository,
-      mockEthereumAddressFactory,
     );
   });
 
   group('ImportErc20TokenUsecase', () {
     test('should save token when all inputs are valid and token does not exist', () async {
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(
-        Result.success(FakeEthereumAddressVO(validInput.contractAddress)),
-      );
       when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
       when(() => mockErc20tokenRepository.findByAddress(any())).thenAnswer((_) async => null);
       when(() => mockErc20tokenRepository.save(any())).thenAnswer((_) async {});
@@ -70,11 +72,16 @@ void main() {
     });
 
     test('should throw DomainException if address validation fails', () {
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(Result.failure('Invalid address'));
+      final invalidInput = ImportErc20TokenInput(
+        name: 'Test Token',
+        symbol: 'TST',
+        decimals: 18,
+        contractAddress: 'invalid_address',
+      );
 
       expect(
-        () => sut.execute(validInput),
-        throwsA(isA<DomainException>().having((e) => e.getReason(), 'reason', 'Invalid address')),
+        () => sut.execute(invalidInput),
+        throwsA(isA<DomainException>().having((e) => e.getReason(), 'reason', 'Ethereum address must be 42 characters long')),
       );
       verifyNever(() => mockErc20tokenRepository.save(any()));
     });
@@ -87,9 +94,7 @@ void main() {
         decimals: validInput.decimals,
         networkId: testNetwork.id!,
       );
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(
-        Result.success(FakeEthereumAddressVO(validInput.contractAddress)),
-      );
+
       when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
       when(() => mockErc20tokenRepository.findByAddress(any())).thenAnswer((_) async => existingToken);
 
@@ -107,9 +112,6 @@ void main() {
         decimals: 18,
         contractAddress: validInput.contractAddress,
       );
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(
-        Result.success(FakeEthereumAddressVO(validInput.contractAddress)),
-      );
 
       expect(
         () => sut.execute(invalidInput),
@@ -126,9 +128,6 @@ void main() {
         decimals: 18,
         contractAddress: validInput.contractAddress,
       );
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(
-        Result.success(FakeEthereumAddressVO(validInput.contractAddress)),
-      );
 
       expect(
         () => sut.execute(invalidInput),
@@ -144,9 +143,6 @@ void main() {
         symbol: 'TST',
         decimals: -1,
         contractAddress: validInput.contractAddress,
-      );
-      when(() => mockEthereumAddressFactory.create(any())).thenReturn(
-        Result.success(FakeEthereumAddressVO(validInput.contractAddress)),
       );
 
       expect(
