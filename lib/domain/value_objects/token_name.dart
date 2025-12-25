@@ -1,6 +1,8 @@
 import 'package:kriptum/shared/utils/result.dart';
 
 class TokenName {
+  static const _maxWidth = 20;
+
   final String _value;
   TokenName._(this._value);
 
@@ -34,8 +36,8 @@ class TokenName {
     if (value.isEmpty) {
       return 'Token name cannot be empty';
     }
-    if (value.length > 31) {
-      return 'Token name too large';
+    if (value.length > _maxWidth) {
+      return 'Token name must be lower or equal to $_maxWidth chars';
     }
     return null;
   }

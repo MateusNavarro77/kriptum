@@ -40,16 +40,16 @@ void main() {
       test(
         'should fail to create TokenName value object when too long',
         () {
-          final longName = 'a' * 32; // 32 characters
+          final longName = 'a' * 21; // 21 characters
           final result = TokenName.create(longName);
           expect(result.isFailure, true);
-          expect(result.failure, 'Token name too large');
+          expect(result.failure, 'Token name must be lower or equal to 20 chars');
         },
       );
       test(
-        'should create TokenName with exactly 31 characters',
+        'should create TokenName with exactly 20 characters',
         () {
-          final maxLengthName = 'a' * 31; // 31 characters
+          final maxLengthName = 'a' * 20; // 20 characters
           final result = TokenName.create(maxLengthName);
           expect(result.isSuccess, true);
           expect(result.value?.value, maxLengthName);
