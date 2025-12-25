@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/import_wallet/import_wallet_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
-import 'package:kriptum/domain/factories/mnemonic_factory.dart';
 import 'package:kriptum/domain/factories/password_factory.dart';
+import 'package:kriptum/domain/value_objects/mnemonic.dart';
 import 'package:kriptum/ui/pages/home_wrapper/home_wrapper_page.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/main_title_app_bar_widget.dart';
@@ -89,7 +89,7 @@ class _ImportWalletViewState extends State<_ImportWalletView> {
                       controller: _mnemonicTextController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        final result = injector.get<MnemonicFactory>().create(value ?? '');
+                        final result = Mnemonic.create(value ?? '');
                         if (result.isFailure) return result.failure;
                         return null;
                       },
