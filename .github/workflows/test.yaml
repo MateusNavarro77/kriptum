@@ -1,4 +1,4 @@
-name: Run Tests
+name: "Run Kriptum unit tests"
 
 on:
   pull_request:
@@ -30,6 +30,12 @@ jobs:
 
       - name: Install Dependencies
         run: flutter pub get
-
-      - name: Run Unit Tests
-        run: flutter test
+      
+      - name: Set up test_rocket
+        run: dart pub global activate test_rocket 0.3.0
+      
+      - name: Generate test bundle
+        run: dart pub global run test_rocket bundle
+      
+      - name: Run bundled unit tests
+        run: flutter test test/test_bundle/bundle.dart
