@@ -3,9 +3,9 @@ import 'package:kriptum/domain/factories/ethereum_address/ethereum_address.dart'
 import 'package:kriptum/domain/models/erc20_token.dart';
 import 'package:kriptum/domain/models/token_decimals.dart';
 import 'package:kriptum/domain/models/token_name.dart';
-import 'package:kriptum/domain/models/token_symbol.dart';
 import 'package:kriptum/domain/repositories/erc20_token_repository.dart';
 import 'package:kriptum/domain/repositories/networks_repository.dart';
+import 'package:kriptum/domain/value_objects/token_symbol.dart';
 
 class ImportErc20TokenUsecase {
   final NetworksRepository _networksRepository;

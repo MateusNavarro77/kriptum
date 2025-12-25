@@ -2,6 +2,8 @@ import 'package:kriptum/shared/utils/result.dart';
 
 class TokenSymbol {
   final String _value;
+  static const _maxWidth = 10;
+
   TokenSymbol._(this._value);
 
   String get value => _value;
@@ -34,8 +36,8 @@ class TokenSymbol {
     if (value.isEmpty) {
       return 'Token symbol cannot be empty';
     }
-    if (value.length > 31) {
-      return 'Token symbol too large';
+    if (value.length > _maxWidth) {
+      return 'Symbol must be lower or equal to $_maxWidth chars';
     }
     return null;
   }

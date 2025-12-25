@@ -40,16 +40,16 @@ void main() {
       test(
         'should fail to create TokenSymbol value object when too long',
         () {
-          final longSymbol = 'A' * 32; // 32 characters
+          final longSymbol = 'A' * 11; // 11 characters
           final result = TokenSymbol.create(longSymbol);
           expect(result.isFailure, true);
-          expect(result.failure, 'Token symbol too large');
+          expect(result.failure, 'Symbol must be lower or equal to 10 chars');
         },
       );
       test(
-        'should create TokenSymbol with exactly 31 characters',
+        'should create TokenSymbol with exactly 10 characters',
         () {
-          final maxLengthSymbol = 'A' * 31; // 31 characters
+          final maxLengthSymbol = 'A' * 10; // 10 characters
           final result = TokenSymbol.create(maxLengthSymbol);
           expect(result.isSuccess, true);
           expect(result.value?.value, maxLengthSymbol);
