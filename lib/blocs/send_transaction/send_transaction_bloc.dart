@@ -154,6 +154,7 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
       final params = SendTransactionUsecaseParams(
         to: state.toAddress!,
         amount: state.amount!,
+        gasPrice: state.gasPrice,
       );
       final output = await _sendTransactionUsecase.execute(params);
       emit(
@@ -192,5 +193,11 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
         amountWithGas: totalAmount.wei,
       ),
     );
+  }
+
+  @override
+  Future<void> close() async {
+    await cancelGasPriceSubscription();
+    return super.close();
   }
 }

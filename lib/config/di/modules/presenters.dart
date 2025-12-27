@@ -98,6 +98,8 @@ Future<void> registerPresenters() async {
       injector.get(),
       injector.get(),
       injector.get(),
+      injector.get(),
+      injector.get(),
     ),
   );
   injector.registerFactory<ThemeBloc>(
