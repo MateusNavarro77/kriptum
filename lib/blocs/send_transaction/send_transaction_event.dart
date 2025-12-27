@@ -25,3 +25,9 @@ final class ReturnToRecipientSelection extends SendTransactionEvent {}
 final class ReturnToAmountSelection extends SendTransactionEvent {}
 
 final class SendTransactionRequest extends SendTransactionEvent {}
+
+final class _GasPriceUpdated extends SendTransactionEvent {
+  final BigInt gasPrice;
+
+  _GasPriceUpdated({required this.gasPrice});
+}

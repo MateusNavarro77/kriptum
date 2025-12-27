@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
+import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
+import 'package:kriptum/domain/repositories/networks_repository.dart';
+import 'package:kriptum/domain/services/gas_price_service.dart';
 import 'package:kriptum/domain/usecases/get_native_balance_of_connected_account_usecase.dart';
 import 'package:kriptum/domain/usecases/send_transaction_usecase.dart';
 import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
@@ -14,11 +17,17 @@ part 'send_transaction_state.dart';
 class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionState> {
   final AccountsRepository _accountsRepository;
   final GetNativeBalanceOfConnectedAccountUsecase _getNativeBalanceOfAccountUsecase;
+  final GasPriceService _gasPriceService;
   final SendTransactionUsecase _sendTransactionUsecase;
+  final NetworksRepository _networksRepository;
+  StreamSubscription<BigInt>? _gasPriceSubscription;
+
   SendTransactionBloc(
     this._accountsRepository,
     this._getNativeBalanceOfAccountUsecase,
     this._sendTransactionUsecase,
+    this._gasPriceService,
+    this._networksRepository,
   ) : super(SendTransactionState.initial()) {
     on<ToAddressChanged>(_onToAddressChanged);
     on<ReturnToAmountSelection>(_onReturnToAmountSelection);
@@ -26,6 +35,22 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
     on<AdvanceToAmountSelection>(_onAdvanceToAmountSelection);
     on<AdvanceToConfirmation>(_onAdvanceToConfirmation);
     on<SendTransactionRequest>(_onSendTransactionRequest);
+    on<_GasPriceUpdated>(_onGasPriceUpdated);
+  }
+  Future<void> _subscribeToGasPriceUpdates() async {
+    final currentNetwork = await _networksRepository.getCurrentNetwork();
+    _gasPriceSubscription = _gasPriceService.subscribeToGasPriceUpdates(rpcUrl: currentNetwork.rpcUrl).listen(
+      (gasPrice) async {
+        add(
+          _GasPriceUpdated(gasPrice: gasPrice),
+        );
+      },
+    );
+  }
+
+  Future<void> cancelGasPriceSubscription() async {
+    await _gasPriceSubscription?.cancel();
+    _gasPriceSubscription = null;
   }
 
   Future<void> _onToAddressChanged(
@@ -44,6 +69,7 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
     ReturnToAmountSelection event,
     Emitter<SendTransactionState> emit,
   ) {
+    cancelGasPriceSubscription();
     emit(
       state.copyWith(
         sendTransactionStepStatus: SendTransactionStepStatus.selectAmount,
@@ -79,6 +105,7 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
     Emitter<SendTransactionState> emit,
   ) async {
     try {
+      await _subscribeToGasPriceUpdates();
       emit(
         state.copyWith(
           errorMessage: '',
@@ -151,5 +178,19 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
         ),
       );
     }
+  }
+
+  Future<void> _onGasPriceUpdated(_GasPriceUpdated event, Emitter<SendTransactionState> emit) async {
+    final currentAmount = EthereumAmount.fromWei(state.amount ?? BigInt.zero);
+    final gasPrice = EthereumAmount.fromWei(event.gasPrice);
+    final estimatedGas = BigInt.from(21000); //standard gas limit
+    final gasFee = gasPrice.multiply(estimatedGas);
+    final totalAmount = currentAmount.add(gasFee);
+    emit(
+      state.copyWith(
+        gasPrice: event.gasPrice,
+        amountWithGas: totalAmount.wei,
+      ),
+    );
   }
 }

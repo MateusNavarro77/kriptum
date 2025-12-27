@@ -14,6 +14,8 @@ class TransactionServiceImpl implements TransactionService {
     required String to,
     required BigInt amountInWei,
     required String rpcUrl,
+    BigInt? gasPrice,
+    int? maxGas,
   }) async {
     final ethClient = Web3Client(rpcUrl, _httpClient);
     final chainId = await ethClient.getChainId();
@@ -22,9 +24,11 @@ class TransactionServiceImpl implements TransactionService {
       chainId: chainId.toInt(),
       account.privateKey,
       Transaction(
+        gasPrice: gasPrice != null ? EtherAmount.inWei(gasPrice) : null,
         from: account.privateKey.address,
         to: EthereumAddress.fromHex(to),
         value: EtherAmount.inWei(amountInWei),
+        maxGas: maxGas,
       ),
     );
     return txHash;
