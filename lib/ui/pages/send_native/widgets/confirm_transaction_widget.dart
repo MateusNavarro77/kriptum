@@ -67,207 +67,500 @@ class _ConfirmTransactionWidget extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Spacings.horizontalPadding,
-          ),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 24,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'From:',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  ListTile(
-                    // shape: Border.all(
-
-                    //   color: Theme.of(context).hintColor
-                    // ),
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: Theme.of(context).hintColor),
-                        borderRadius: const BorderRadius.all(Radius.circular(10))),
-                    trailing: Builder(builder: (context) {
-                      final balanceBloc = context.watch<CurrentNativeBalanceBloc>();
-                      final networksCubit = context.watch<CurrentNetworkCubit>();
-                      final balance = balanceBloc.state.accountBalance;
-                      final networkState = networksCubit.state;
-                      String ticker = '';
-                      if (networkState is CurrentNetworkLoaded) {
-                        ticker = networkState.network.ticker;
-                      }
-                      if (ticker.isEmpty || balance == null) return SizedBox.shrink();
-                      return Text(
-                          //'${formatEther(accountBalanceController.balance)} ${currentNetworkController.currentConnectedNetwork?.ticker}',
-                          '${balance.toEtherString(decimals: 2)} $ticker',
-                          style: Theme.of(context).textTheme.bodyLarge);
-                    }),
-                    leading: BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
-                      builder: (context, state) {
-                        if (state.account == null) return SizedBox.shrink();
-                        return Jazzicon.getIconWidget(
-                          size: 30,
-                          Jazzicon.getJazziconData(
-                            30,
-                            address: state.account?.address,
-                          ),
-                        );
-                      },
-                    ),
-                    title: BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
-                      builder: (context, state) {
-                        if (state.account == null) return SizedBox.shrink();
-                        return Text(
-                          state.account!.alias ?? 'From',
-                        );
-                      },
-                    ),
-                    subtitle: BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
-                      builder: (context, state) {
-                        if (state.account == null) return SizedBox.shrink();
-                        return Text(
-                          formatAddress(state.account!.address),
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Text(
-                    'To',
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  BlocSelector<SendTransactionBloc, SendTransactionState, String?>(
-                    selector: (state) {
-                      return state.toAddress;
-                    },
-                    builder: (context, state) {
-                      return ListTile(
-                        title: Text(
-                          formatAddress(state!),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Spacings.horizontalPadding, vertical: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    spacing: 16,
+                    children: [
+                      Builder(
+                        builder: (context) {
+                          final amountToSend =
+                              context.select<SendTransactionBloc, BigInt?>((bloc) => bloc.state.amount);
+                          final ticker = context.select<CurrentNetworkCubit, String>((cubit) {
+                            final state = cubit.state;
+                            if (state is CurrentNetworkLoaded) {
+                              return state.network.ticker;
+                            }
+                            return '';
+                          });
+                          if (amountToSend == null || ticker.isEmpty) {
+                            return SizedBox.shrink();
+                          }
+                          return Text(
+                            '${EthereumAmount.fromWei(amountToSend).toEtherString(decimals: 4)} $ticker',
+                            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                ),
+                          );
+                        },
+                      ),
+                      TileContainer(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'From: ',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
+                              builder: (context, state) {
+                                if (state.account == null) return const SizedBox.shrink();
+                                return Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  spacing: 8,
+                                  children: [
+                                    Jazzicon.getIconWidget(
+                                      size: 24,
+                                      Jazzicon.getJazziconData(
+                                        24,
+                                        address: state.account?.address,
+                                      ),
+                                    ),
+                                    Text(
+                                      formatAddress(state.account!.address),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
                         ),
-                        // shape: Border.all(
-
-                        //   color: Theme.of(context).hintColor
-                        // ),
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(width: 1, color: Theme.of(context).hintColor),
-                            borderRadius: const BorderRadius.all(Radius.circular(10))),
-                        leading: Jazzicon.getIconWidget(
-                          size: 30,
-                          Jazzicon.getJazziconData(
-                            30,
-                            address: state,
-                          ),
-                        ),
-                      );
-                    },
-                  )
-                ],
-              ),
-              Expanded(
-                  child: ListView(
-                children: [
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Text(
-                    'AMOUNT',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Builder(builder: (context) {
-                    final amount = context.select<SendTransactionBloc, BigInt?>((bloc) => bloc.state.amount);
-                    final currentNetworkCubit = context.watch<CurrentNetworkCubit>();
-                    String ticker = '';
-                    final networkState = currentNetworkCubit.state;
-                    if (networkState is CurrentNetworkLoaded) {
-                      ticker = networkState.network.ticker;
-                    }
-                    if (ticker.isEmpty || amount == null) {
-                      return SizedBox.shrink();
-                    }
-
-                    return Text(
-                      '${EthereumAmount.fromWei(amount).toEtherString(decimals: 2)} \n $ticker',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.displayMedium,
-                    );
-                  })
-                ],
-              )),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BlocConsumer<SendTransactionBloc, SendTransactionState>(
-                    listenWhen: (previous, current) => previous.status != current.status,
-                    listener: (context, state) async {
-                      final accountCubit = context.read<CurrentAccountCubit>();
-                      final networkCubit = context.read<CurrentNetworkCubit>();
-                      final sendTransactionBloc = context.read<SendTransactionBloc>();
-                      if (state.status == SendTransactionStatus.confirmationSuccess) {
-                        final networkState = networkCubit.state;
-                        final sendTransactionState = sendTransactionBloc.state;
-                        final accountState = accountCubit.state;
-                        Navigator.of(context).pop();
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return TransactionInfoDialog(
-                              network: (networkState as CurrentNetworkLoaded).network,
-                              from: accountState.account!,
-                              toAddress: sendTransactionState.toAddress!,
-                              transactionHash: sendTransactionState.txHash!,
-                              amount: sendTransactionState.amount!,
-                              dateTime: state.confirmationTime!,
-                              followOnBlockExplorerUrl: sendTransactionState.followOnBlockExplorerUrl,
-                              onPop: () {},
+                      ),
+                      TileContainer(
+                        child: BlocSelector<SendTransactionBloc, SendTransactionState, String?>(
+                          selector: (state) {
+                            return state.toAddress;
+                          },
+                          builder: (context, state) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'To: ',
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  spacing: 8,
+                                  children: [
+                                    Jazzicon.getIconWidget(
+                                      size: 24,
+                                      Jazzicon.getJazziconData(
+                                        24,
+                                        address: state,
+                                      ),
+                                    ),
+                                    Text(
+                                      formatAddress(state!),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ],
                             );
                           },
+                        ),
+                      ),
+                      TileContainer(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Gas Price: ',
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                ),
+                                Builder(
+                                  builder: (context) {
+                                    final gasPrice =
+                                        context.select<SendTransactionBloc, BigInt?>((bloc) => bloc.state.gasPrice);
+                                    final ticker = context.select<CurrentNetworkCubit, String>((cubit) {
+                                      final state = cubit.state;
+                                      if (state is CurrentNetworkLoaded) {
+                                        return state.network.ticker;
+                                      }
+                                      return '';
+                                    });
+                                    if (gasPrice == null) {
+                                      return const SizedBox.shrink();
+                                    }
+                                    return Text(
+                                      '${EthereumAmount.fromWei(gasPrice).toEtherString(decimals: 18)} $ticker',
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Network fee',
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                ),
+                                Builder(
+                                  builder: (context) {
+                                    final gasFee =
+                                        context.select<SendTransactionBloc, BigInt?>((bloc) => bloc.state.gasFee);
+                                    final ticker = context.select<CurrentNetworkCubit, String>((cubit) {
+                                      final state = cubit.state;
+                                      if (state is CurrentNetworkLoaded) {
+                                        return state.network.ticker;
+                                      }
+                                      return '';
+                                    });
+                                    if (gasFee == null) {
+                                      return const SizedBox.shrink();
+                                    }
+                                    return Text(
+                                      '${EthereumAmount.fromWei(gasFee).toEtherString()} $ticker',
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+
+                      // ...List.generate(
+                      //   ,
+                      //   (index) => ListTile(
+                      //     title: Text('Item $index'),
+                      //   ),
+                      // )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacings.horizontalPadding,
+              ),
+              child: BlocConsumer<SendTransactionBloc, SendTransactionState>(
+                listenWhen: (previous, current) => previous.status != current.status,
+                listener: (context, state) {
+                  final accountCubit = context.read<CurrentAccountCubit>();
+                  final networkCubit = context.read<CurrentNetworkCubit>();
+                  final sendTransactionBloc = context.read<SendTransactionBloc>();
+                  if (state.status == SendTransactionStatus.confirmationSuccess) {
+                    final networkState = networkCubit.state;
+                    final sendTransactionState = sendTransactionBloc.state;
+                    final accountState = accountCubit.state;
+                    Navigator.of(context).pop();
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return TransactionInfoDialog(
+                          network: (networkState as CurrentNetworkLoaded).network,
+                          from: accountState.account!,
+                          toAddress: sendTransactionState.toAddress!,
+                          transactionHash: sendTransactionState.txHash!,
+                          amount: sendTransactionState.amount!,
+                          dateTime: state.confirmationTime!,
+                          followOnBlockExplorerUrl: sendTransactionState.followOnBlockExplorerUrl,
+                          onPop: () {},
                         );
-                      }
-                      if (state.status == SendTransactionStatus.confirmationError) {
-                        showSnackBar(
-                          message: state.errorMessage,
-                          context: context,
-                          snackBarType: SnackBarType.error,
-                        );
-                      }
-                    },
-                    buildWhen: (previous, current) => previous.status != current.status,
-                    builder: (context, state) {
-                      final loading = state.status == SendTransactionStatus.confirmationLoading;
-                      if (loading) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      return FilledButton(
-                        onPressed: () => _triggerSendTransaction(context),
-                        child: Text('Send'),
-                      );
-                    },
-                  )
-                ],
-              )
-            ],
-          ),
+                      },
+                    );
+                  }
+                  if (state.status == SendTransactionStatus.confirmationError) {
+                    showSnackBar(
+                      message: state.errorMessage,
+                      context: context,
+                      snackBarType: SnackBarType.error,
+                    );
+                  }
+                },
+                builder: (context, state) {
+                  if (state.status == SendTransactionStatus.confirmationLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return Row(
+                    spacing: 8,
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                      ),
+                      Expanded(
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
+                          onPressed: () {
+                            _triggerSendTransaction(context);
+                          },
+                          child: const Text('Confirm'),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            )
+          ],
         ),
       ),
+
+      // SafeArea(
+      //   child: Padding(
+      //     padding: EdgeInsets.symmetric(
+      //       horizontal: Spacings.horizontalPadding,
+      //     ),
+      //     child: Column(
+      //       children: [
+      //         const SizedBox(
+      //           height: 24,
+      //         ),
+      //         Column(
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           mainAxisSize: MainAxisSize.min,
+      //           children: [
+      //             Text(
+      //               'From:',
+      //               style: Theme.of(context).textTheme.titleLarge,
+      //             ),
+      //             ListTile(
+      //               // shape: Border.all(
+
+      //               //   color: Theme.of(context).hintColor
+      //               // ),
+      //               shape: RoundedRectangleBorder(
+      //                   side: BorderSide(width: 1, color: Theme.of(context).hintColor),
+      //                   borderRadius: const BorderRadius.all(Radius.circular(10))),
+      //               trailing: Builder(builder: (context) {
+      //                 final balanceBloc = context.watch<CurrentNativeBalanceBloc>();
+      //                 final networksCubit = context.watch<CurrentNetworkCubit>();
+      //                 final balance = balanceBloc.state.accountBalance;
+      //                 final networkState = networksCubit.state;
+      //                 String ticker = '';
+      //                 if (networkState is CurrentNetworkLoaded) {
+      //                   ticker = networkState.network.ticker;
+      //                 }
+      //                 if (ticker.isEmpty || balance == null) return SizedBox.shrink();
+      //                 return Text(
+      //                     //'${formatEther(accountBalanceController.balance)} ${currentNetworkController.currentConnectedNetwork?.ticker}',
+      //                     '${balance.toEtherString(decimals: 2)} $ticker',
+      //                     style: Theme.of(context).textTheme.bodyLarge);
+      //               }),
+      //               leading: BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
+      //                 builder: (context, state) {
+      //                   if (state.account == null) return SizedBox.shrink();
+      //                   return Jazzicon.getIconWidget(
+      //                     size: 30,
+      //                     Jazzicon.getJazziconData(
+      //                       30,
+      //                       address: state.account?.address,
+      //                     ),
+      //                   );
+      //                 },
+      //               ),
+      //               title: BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
+      //                 builder: (context, state) {
+      //                   if (state.account == null) return SizedBox.shrink();
+      //                   return Text(
+      //                     state.account!.alias ?? 'From',
+      //                   );
+      //                 },
+      //               ),
+      //               subtitle: BlocBuilder<CurrentAccountCubit, CurrentAccountState>(
+      //                 builder: (context, state) {
+      //                   if (state.account == null) return SizedBox.shrink();
+      //                   return Text(
+      //                     formatAddress(state.account!.address),
+      //                   );
+      //                 },
+      //               ),
+      //             ),
+      //             const SizedBox(
+      //               height: 24,
+      //             ),
+      //             Text(
+      //               'To',
+      //               style: Theme.of(context).textTheme.titleLarge,
+      //             ),
+      //             BlocSelector<SendTransactionBloc, SendTransactionState, String?>(
+      //               selector: (state) {
+      //                 return state.toAddress;
+      //               },
+      //               builder: (context, state) {
+      //                 return ListTile(
+      //                   title: Text(
+      //                     formatAddress(state!),
+      //                   ),
+      //                   // shape: Border.all(
+
+      //                   //   color: Theme.of(context).hintColor
+      //                   // ),
+      //                   shape: RoundedRectangleBorder(
+      //                       side: BorderSide(width: 1, color: Theme.of(context).hintColor),
+      //                       borderRadius: const BorderRadius.all(Radius.circular(10))),
+      //                   leading: Jazzicon.getIconWidget(
+      //                     size: 30,
+      //                     Jazzicon.getJazziconData(
+      //                       30,
+      //                       address: state,
+      //                     ),
+      //                   ),
+      //                 );
+      //               },
+      //             )
+      //           ],
+      //         ),
+      //         Expanded(
+      //             child: ListView(
+      //           children: [
+      //             const SizedBox(
+      //               height: 24,
+      //             ),
+      //             Text(
+      //               'AMOUNT',
+      //               textAlign: TextAlign.center,
+      //               style: Theme.of(context).textTheme.titleMedium,
+      //             ),
+      //             const SizedBox(
+      //               height: 24,
+      //             ),
+      //             Builder(builder: (context) {
+      //               final amount = context.select<SendTransactionBloc, BigInt?>((bloc) => bloc.state.amount);
+      //               final currentNetworkCubit = context.watch<CurrentNetworkCubit>();
+      //               String ticker = '';
+      //               final networkState = currentNetworkCubit.state;
+      //               if (networkState is CurrentNetworkLoaded) {
+      //                 ticker = networkState.network.ticker;
+      //               }
+      //               if (ticker.isEmpty || amount == null) {
+      //                 return SizedBox.shrink();
+      //               }
+
+      //               return Text(
+      //                 '${EthereumAmount.fromWei(amount).toEtherString(decimals: 2)} \n $ticker',
+      //                 textAlign: TextAlign.center,
+      //                 style: Theme.of(context).textTheme.displayMedium,
+      //               );
+      //             }),
+      //             Builder(
+      //               builder: (context) {
+      //                 final gasPrice = context.select<SendTransactionBloc, BigInt?>((bloc) => bloc.state.gasPrice);
+      //                 if (gasPrice == null) {
+      //                   return const SizedBox.shrink();
+      //                 }
+      //                 return Padding(
+      //                   padding: const EdgeInsets.all(16.0),
+      //                   child: Text(
+      //                     'Gas Price: ${EthereumAmount.fromWei(gasPrice).toEtherString(decimals: 18)} Gwei',
+      //                     textAlign: TextAlign.center,
+      //                     style: Theme.of(context).textTheme.bodyMedium,
+      //                   ),
+      //                 );
+      //               },
+      //             )
+      //           ],
+      //         )),
+      //         Column(
+      //           crossAxisAlignment: CrossAxisAlignment.stretch,
+      //           mainAxisSize: MainAxisSize.min,
+      //           children: [
+      //             BlocConsumer<SendTransactionBloc, SendTransactionState>(
+      //               listenWhen: (previous, current) => previous.status != current.status,
+      //               listener: (context, state) async {
+      //                 final accountCubit = context.read<CurrentAccountCubit>();
+      //                 final networkCubit = context.read<CurrentNetworkCubit>();
+      //                 final sendTransactionBloc = context.read<SendTransactionBloc>();
+      //                 if (state.status == SendTransactionStatus.confirmationSuccess) {
+      //                   final networkState = networkCubit.state;
+      //                   final sendTransactionState = sendTransactionBloc.state;
+      //                   final accountState = accountCubit.state;
+      //                   Navigator.of(context).pop();
+      //                   showDialog(
+      //                     context: context,
+      //                     builder: (context) {
+      //                       return TransactionInfoDialog(
+      //                         network: (networkState as CurrentNetworkLoaded).network,
+      //                         from: accountState.account!,
+      //                         toAddress: sendTransactionState.toAddress!,
+      //                         transactionHash: sendTransactionState.txHash!,
+      //                         amount: sendTransactionState.amount!,
+      //                         dateTime: state.confirmationTime!,
+      //                         followOnBlockExplorerUrl: sendTransactionState.followOnBlockExplorerUrl,
+      //                         onPop: () {},
+      //                       );
+      //                     },
+      //                   );
+      //                 }
+      //                 if (state.status == SendTransactionStatus.confirmationError) {
+      //                   showSnackBar(
+      //                     message: state.errorMessage,
+      //                     context: context,
+      //                     snackBarType: SnackBarType.error,
+      //                   );
+      //                 }
+      //               },
+      //               buildWhen: (previous, current) => previous.status != current.status,
+      //               builder: (context, state) {
+      //                 final loading = state.status == SendTransactionStatus.confirmationLoading;
+      //                 if (loading) {
+      //                   return const Center(
+      //                     child: CircularProgressIndicator(),
+      //                   );
+      //                 }
+      //                 return FilledButton(
+      //                   onPressed: () => _triggerSendTransaction(context),
+      //                   child: Text('Send'),
+      //                 );
+      //               },
+      //             )
+      //           ],
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
     );
   }
 
   void _triggerSendTransaction(BuildContext context) async {
     context.read<SendTransactionBloc>().add(SendTransactionRequest());
+  }
+}
+
+class TileContainer extends StatelessWidget {
+  const TileContainer({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+        color: Theme.of(context).colorScheme.surfaceContainerHigh,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: child,
+      ),
+    );
   }
 }

@@ -17,6 +17,7 @@ class SendTransactionState {
   final AmountValidationStatus amountValidationStatus;
   final BigInt? gasPrice;
   final BigInt? amountWithGas;
+  final BigInt? gasFee;
   final DateTime? confirmationTime;
   final String? toAddress;
   final BigInt? amount;
@@ -38,6 +39,7 @@ class SendTransactionState {
     required this.confirmationTime,
     required this.gasPrice,
     required this.amountWithGas,
+    required this.gasFee,
   });
 
   factory SendTransactionState.initial() {
@@ -54,6 +56,7 @@ class SendTransactionState {
       errorMessage: '',
       toAddressEqualsCurrentAccount: false,
       status: SendTransactionStatus.confirmationIdle,
+      gasFee: null,
     );
   }
   SendTransactionState copyWith({
@@ -69,6 +72,7 @@ class SendTransactionState {
     DateTime? confirmationTime,
     BigInt? gasPrice,
     BigInt? amountWithGas,
+  BigInt? gasFee,
   }) {
     return SendTransactionState(
       confirmationTime: confirmationTime ?? this.confirmationTime,
@@ -83,6 +87,7 @@ class SendTransactionState {
       amountValidationStatus: amountValidationStatus ?? this.amountValidationStatus,
       gasPrice: gasPrice ?? this.gasPrice,
       amountWithGas: amountWithGas ?? this.amountWithGas,
+      gasFee: gasFee ?? this.gasFee,
     );
   }
 }

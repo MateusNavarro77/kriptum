@@ -3,7 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/blocs/send_transaction/send_transaction_bloc.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
 import 'package:kriptum/domain/models/account.dart';
+import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
+import 'package:kriptum/domain/repositories/networks_repository.dart';
+import 'package:kriptum/domain/services/services.dart';
 import 'package:kriptum/domain/usecases/get_native_balance_of_connected_account_usecase.dart';
 import 'package:kriptum/domain/usecases/send_transaction_usecase.dart';
 import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
@@ -18,16 +21,29 @@ class MockSendTransactionUsecase extends Mock implements SendTransactionUsecase 
 
 class FakeSendTransactionUsecaseParams extends Fake implements SendTransactionUsecaseParams {}
 
+class MockGasPriceService extends Mock implements GasPriceService {}
+
+class MockNetworksRepository extends Mock implements NetworksRepository {}
+
 void main() {
   late SendTransactionBloc sendTransactionBloc;
   late MockAccountsRepository mockAccountsRepository;
   late MockGetNativeBalanceOfConnectedAccountUsecase mockGetNativeBalanceOfConnectedAccountUsecase;
   late MockSendTransactionUsecase mockSendTransactionUsecase;
-
+  late MockGasPriceService mockGasPriceService;
+  late MockNetworksRepository mockNetworksRepository;
   final testAccount = Account(
     accountIndex: 0,
     address: '0xUserAddress',
     encryptedJsonWallet: 'json',
+  );
+  final testNetwork = Network(
+    id: 1,
+    name: 'Mainnet',
+    rpcUrl: 'http://main.net',
+    ticker: 'ETH',
+    currencyDecimals: 18,
+    blockExplorerUrl: 'https://etherscan.io',
   );
 
   setUpAll(() {
@@ -38,10 +54,14 @@ void main() {
     mockAccountsRepository = MockAccountsRepository();
     mockGetNativeBalanceOfConnectedAccountUsecase = MockGetNativeBalanceOfConnectedAccountUsecase();
     mockSendTransactionUsecase = MockSendTransactionUsecase();
+    mockGasPriceService = MockGasPriceService();
+    mockNetworksRepository = MockNetworksRepository();
     sendTransactionBloc = SendTransactionBloc(
       mockAccountsRepository,
       mockGetNativeBalanceOfConnectedAccountUsecase,
       mockSendTransactionUsecase,
+      mockGasPriceService,
+      mockNetworksRepository,
     );
   });
 
@@ -123,17 +143,21 @@ void main() {
         build: () {
           final userBalance = EthereumAmount.fromWei(BigInt.parse('1000000000000000000')); // 1 ETH
           when(() => mockGetNativeBalanceOfConnectedAccountUsecase.execute()).thenAnswer((_) async => userBalance);
+          when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
+          when(() => mockGasPriceService.subscribeToGasPriceUpdates(rpcUrl: testNetwork.rpcUrl))
+              .thenAnswer((_) => Stream.value(BigInt.from(20000000000)));
           return sendTransactionBloc;
         },
         act: (bloc) => bloc.add(AdvanceToConfirmation(amount: amountToSend)),
+        skip: 1, // Skip the first loading state that happens during _subscribeToGasPriceUpdates
         expect: () => [
-          isA<SendTransactionState>()
-              .having((s) => s.amountValidationStatus, 'validationStatus', AmountValidationStatus.validationLoading),
           predicate<SendTransactionState>((state) {
             return state.amountValidationStatus == AmountValidationStatus.validationSuccess &&
                 state.sendTransactionStepStatus == SendTransactionStepStatus.toBeConfirmed &&
                 state.amount == convertStringEthToWei(amountToSend);
           }),
+          // Gas price update from the stream
+          isA<SendTransactionState>().having((s) => s.gasPrice, 'gasPrice', isNotNull),
         ],
       );
 
@@ -142,15 +166,19 @@ void main() {
         build: () {
           final userBalance = EthereumAmount.fromWei(BigInt.from(1000)); // 1000 wei
           when(() => mockGetNativeBalanceOfConnectedAccountUsecase.execute()).thenAnswer((_) async => userBalance);
+          when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
+          when(() => mockGasPriceService.subscribeToGasPriceUpdates(rpcUrl: testNetwork.rpcUrl))
+              .thenAnswer((_) => Stream.value(BigInt.from(20000000000)));
           return sendTransactionBloc;
         },
         act: (bloc) => bloc.add(AdvanceToConfirmation(amount: '0.5')), // 0.5 ETH
+        skip: 1, // Skip the first loading state that happens during _subscribeToGasPriceUpdates
         expect: () => [
-          isA<SendTransactionState>()
-              .having((s) => s.amountValidationStatus, 'validationStatus', AmountValidationStatus.validationLoading),
           isA<SendTransactionState>()
               .having((s) => s.amountValidationStatus, 'validationStatus', AmountValidationStatus.validationError)
               .having((s) => s.errorMessage, 'errorMessage', 'Not enough balance'),
+          // Gas price update from the stream (still happens even after error)
+          isA<SendTransactionState>().having((s) => s.gasPrice, 'gasPrice', isNotNull),
         ],
       );
 
@@ -158,15 +186,19 @@ void main() {
         'emits [loading, error] when usecase throws',
         build: () {
           when(() => mockGetNativeBalanceOfConnectedAccountUsecase.execute()).thenThrow(Exception('Usecase failed'));
+          when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
+          when(() => mockGasPriceService.subscribeToGasPriceUpdates(rpcUrl: testNetwork.rpcUrl))
+              .thenAnswer((_) => Stream.value(BigInt.from(20000000000)));
           return sendTransactionBloc;
         },
         act: (bloc) => bloc.add(AdvanceToConfirmation(amount: amountToSend)),
+        skip: 1, // Skip the first loading state that happens during _subscribeToGasPriceUpdates
         expect: () => [
-          isA<SendTransactionState>()
-              .having((s) => s.amountValidationStatus, 'validationStatus', AmountValidationStatus.validationLoading),
           isA<SendTransactionState>()
               .having((s) => s.amountValidationStatus, 'validationStatus', AmountValidationStatus.validationError)
               .having((s) => s.errorMessage, 'errorMessage', 'Unknown error'),
+          // Gas price update from the stream (still happens even after error)
+          isA<SendTransactionState>().having((s) => s.gasPrice, 'gasPrice', isNotNull),
         ],
       );
     });
