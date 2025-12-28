@@ -72,7 +72,7 @@ class SendTransactionState {
     DateTime? confirmationTime,
     BigInt? gasPrice,
     BigInt? amountWithGas,
-  BigInt? gasFee,
+    BigInt? gasFee,
   }) {
     return SendTransactionState(
       confirmationTime: confirmationTime ?? this.confirmationTime,
