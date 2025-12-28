@@ -19,7 +19,7 @@ class MainBalanceViewer extends StatelessWidget {
               CurrentNativeBalanceRequested(),
             )
             ..add(
-              CurrentNativeBalanceRequested(),
+              CurrentNativeBalanceVisibilityRequested(),
             ),
         ),
         BlocProvider<CurrentNetworkCubit>(
