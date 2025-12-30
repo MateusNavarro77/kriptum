@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/current_network/current_network_cubit.dart';
 import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
-import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/tokens/placeholders.dart';
 import 'package:skeletonizer/skeletonizer.dart' hide Skeleton;
 import 'package:kriptum/ui/widgets/skeleton.dart';
