@@ -36,10 +36,13 @@ class GasServiceImpl implements GasPriceService {
     return _controllers[key]!.stream;
   }
 
-  void _startPolling(String rpcUrl, Duration interval, String key) {
+  Future<void> _startPolling(String rpcUrl, Duration interval, String key) async {
     _listenerCounts[key] = (_listenerCounts[key] ?? 0) + 1;
 
     if (_listenerCounts[key] == 1) {
+      fetchGasPrice(rpcUrl: rpcUrl).then(
+        (value) => _controllers[key]?.add(value),
+      );
       _timers[key] = Timer.periodic(interval, (_) async {
         final price = await fetchGasPrice(rpcUrl: rpcUrl);
         _controllers[key]?.add(price);
