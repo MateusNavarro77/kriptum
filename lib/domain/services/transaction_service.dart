@@ -5,5 +5,7 @@ abstract interface class TransactionService {
     required String to,
     required BigInt amountInWei,
     required String rpcUrl,
+    BigInt? gasPrice,
+    int? maxGas,
   });
 }

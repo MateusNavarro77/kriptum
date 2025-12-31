@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
 import 'package:kriptum/domain/models/account.dart';
 import 'package:kriptum/domain/models/network.dart';
+import 'package:kriptum/domain/services/services.dart';
 import 'package:kriptum/domain/usecases/send_transaction_usecase.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -10,13 +11,15 @@ import '../../mocks/mock_networks_repository.dart';
 import '../../mocks/mock_password_repository.dart';
 import '../../mocks/mock_transaction_service.dart';
 
+class MockGasPriceService extends Mock implements GasPriceService {}
+
 void main() {
   late SendTransactionUsecase sut;
   late MockAccountsRepository mockAccountsRepository;
   late MockPasswordRepository mockPasswordRepository;
   late MockNetworksRepository mockNetworksRepository;
   late MockTransactionService mockTransactionService;
-
+  late MockGasPriceService mockGasPriceService;
   setUpAll(() {
     registerFallbackValue(SendTransactionUsecaseParams(to: '', amount: BigInt.zero));
 
@@ -28,11 +31,13 @@ void main() {
     mockPasswordRepository = MockPasswordRepository();
     mockNetworksRepository = MockNetworksRepository();
     mockTransactionService = MockTransactionService();
+    mockGasPriceService = MockGasPriceService();
 
     sut = SendTransactionUsecase(
       mockAccountsRepository,
       mockPasswordRepository,
       mockNetworksRepository,
+      mockGasPriceService,
       mockTransactionService,
     );
   });
@@ -61,13 +66,16 @@ void main() {
       when(() => mockNetworksRepository.getCurrentNetwork()).thenAnswer((_) async => testNetwork);
       when(() => mockPasswordRepository.getPassword()).thenReturn(testPassword);
       when(() => mockTransactionService.sendTransaction(
-            encryptedJsonAccount: testAccount.encryptedJsonWallet,
-            password: testPassword,
-            to: testParams.to,
-            amountInWei: testParams.amount,
+          encryptedJsonAccount: testAccount.encryptedJsonWallet,
+          password: testPassword,
+          to: testParams.to,
+          amountInWei: testParams.amount,
+          rpcUrl: testNetwork.rpcUrl,
+          gasPrice: any(named: 'gasPrice'),
+          maxGas: any(named: 'maxGas'))).thenAnswer((_) async => testTxHash);
+      when(() => mockGasPriceService.fetchGasPrice(
             rpcUrl: testNetwork.rpcUrl,
-          )).thenAnswer((_) async => testTxHash);
-
+          )).thenAnswer((_) async => BigInt.from(20000000000));
       final result = await sut.execute(testParams);
 
       expect(result.transactionHash, testTxHash);
@@ -94,7 +102,12 @@ void main() {
             to: any(named: 'to'),
             amountInWei: any(named: 'amountInWei'),
             rpcUrl: any(named: 'rpcUrl'),
+            gasPrice: any(named: 'gasPrice'),
+            maxGas: any(named: 'maxGas'),
           )).thenAnswer((_) async => testTxHash);
+      when(() => mockGasPriceService.fetchGasPrice(
+            rpcUrl: testNetwork.rpcUrl,
+          )).thenAnswer((_) async => BigInt.from(20000000000));
 
       final result = await sut.execute(testParams);
 
@@ -122,7 +135,12 @@ void main() {
             to: any(named: 'to'),
             amountInWei: any(named: 'amountInWei'),
             rpcUrl: any(named: 'rpcUrl'),
+            gasPrice: any(named: 'gasPrice'),
+            maxGas: any(named: 'maxGas'),
           )).thenAnswer((_) async => testTxHash);
+      when(() => mockGasPriceService.fetchGasPrice(
+            rpcUrl: testNetwork.rpcUrl,
+          )).thenAnswer((_) async => BigInt.from(20000000000));
 
       final result = await sut.execute(testParams);
 

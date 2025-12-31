@@ -84,6 +84,7 @@ Future<void> registerUsecases() async {
       injector.get(),
       injector.get(),
       injector.get(),
+      injector.get(),
     ),
   );
   injector.registerLazySingleton<GetBalancesOfAccountsUsecase>(

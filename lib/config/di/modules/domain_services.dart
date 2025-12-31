@@ -1,9 +1,5 @@
 import 'package:kriptum/config/di/injector.dart';
-import 'package:kriptum/domain/services/account_decryption_with_password_service.dart';
-import 'package:kriptum/domain/services/account_generator_service.dart';
-import 'package:kriptum/domain/services/encryption_service.dart';
-import 'package:kriptum/domain/services/erc20_token_service.dart';
-import 'package:kriptum/domain/services/transaction_service.dart';
+import 'package:kriptum/domain/services/services.dart';
 import 'package:kriptum/infra/services/services.dart';
 
 Future<void> registerDomainServices() async {
@@ -23,6 +19,11 @@ Future<void> registerDomainServices() async {
   );
   injector.registerLazySingleton<Erc20TokenService>(
     () => Erc20TokenServiceImpl(
+      httpClient: injector.get(),
+    ),
+  );
+  injector.registerLazySingleton<GasPriceService>(
+    () => GasServiceImpl(
       httpClient: injector.get(),
     ),
   );
