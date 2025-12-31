@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/reset_wallet/reset_wallet_bloc.dart';
 import 'package:kriptum/blocs/unlock_wallet/unlock_wallet_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/home_wrapper/home_wrapper_page.dart';
 import 'package:kriptum/ui/pages/splash/splash_page.dart';
@@ -109,10 +110,10 @@ class _UnlockWalletViewState extends State<UnlockWalletView> {
                               ),
                             ),
                           ),
-                          const Text(
-                            'Welcome Back!',
+                          Text(
+                            AppLocalizations.of(context)!.welcomeBack,
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 32,
@@ -120,9 +121,9 @@ class _UnlockWalletViewState extends State<UnlockWalletView> {
                           TextFormField(
                             obscureText: true,
                             controller: _passwordTextController,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              label: Text('Password'),
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              label: Text(AppLocalizations.of(context)!.password),
                             ),
                           ),
                           const SizedBox(
@@ -136,16 +137,17 @@ class _UnlockWalletViewState extends State<UnlockWalletView> {
                                       ),
                                     );
                               },
-                              child: const Text('UNLOCK')),
+                              child: Text(AppLocalizations.of(context)!.unlock)),
                           const SizedBox(
                             height: 40,
                           ),
-                          const Text(
-                            'Wallet won\' unlock? You can ERASE your current wallet and setup a new one',
+                          Text(
+                            AppLocalizations.of(context)!.walletWontUnlock,
                             textAlign: TextAlign.center,
                           ),
                           TextButton(
-                              onPressed: () => _showEraseWalletDialog(context), child: const Text('Reset Wallet'))
+                              onPressed: () => _showEraseWalletDialog(context),
+                              child: Text(AppLocalizations.of(context)!.resetWallet))
                         ],
                       ),
                     ),

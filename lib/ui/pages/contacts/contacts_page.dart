@@ -4,6 +4,7 @@ import 'package:jazzicon/jazzicon.dart';
 import 'package:kriptum/blocs/contacts/contacts_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/models/contact.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
 import 'package:kriptum/ui/pages/add_contact/add_contact_page.dart';
 import 'package:kriptum/ui/pages/edit_contact/edit_contact_page.dart';
@@ -28,7 +29,7 @@ class _ContactsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contacts'),
+        title: Text(AppLocalizations.of(context)!.contacts),
       ),
       body: SafeArea(
         child: Padding(
@@ -48,7 +49,7 @@ class _ContactsView extends StatelessWidget {
                     }
                     if (state.filteredContacts.isEmpty) {
                       return Center(
-                        child: Text('No Contacts'),
+                        child: Text(AppLocalizations.of(context)!.noContacts),
                       );
                     }
 
@@ -130,7 +131,7 @@ class _ContactsView extends StatelessWidget {
                   onPressed: () {
                     _navigateToAddContactPage(context);
                   },
-                  child: const Text('Add contact'))
+                  child: Text(AppLocalizations.of(context)!.addContact))
             ],
           ),
         ),

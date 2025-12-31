@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/create_new_wallet/create_new_wallet_bloc.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/widgets/linear_check_in_progress_bar_widget.dart';
 
 class SecureWalletStep2Screen extends StatelessWidget {
@@ -20,22 +21,22 @@ class SecureWalletStep2Screen extends StatelessWidget {
           Icons.lock,
           size: 42,
         ),
-        const Text(
-          'Secure your wallet',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+        Text(
+          AppLocalizations.of(context)!.secureYourWallet,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
           textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 24,
         ),
-        const Text(
-          'Secure your wallet\'s ',
-          style: TextStyle(fontSize: 16),
+        Text(
+          AppLocalizations.of(context)!.secureYourWalletsPhrase,
+          style: const TextStyle(fontSize: 16),
         ),
         GestureDetector(
           onTap: () => _showSecretRecoveryPhraseDialog(context),
           child: Text(
-            'Secret Recovery Phrase',
+            AppLocalizations.of(context)!.secretRecoveryPhrase,
             style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 16),
           ),
         ),
@@ -46,7 +47,7 @@ class SecureWalletStep2Screen extends StatelessWidget {
           child: TextButton.icon(
             onPressed: () => _showWhyItsImportantDialog(context),
             icon: const Icon(Icons.info),
-            label: const Text('Why is it important?'),
+            label: Text(AppLocalizations.of(context)!.whyIsItImportant),
           ),
         ),
         Expanded(
@@ -56,7 +57,7 @@ class SecureWalletStep2Screen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Text Explaining why its important'),
+                  Text(AppLocalizations.of(context)!.textExplainingWhyImportant),
                   Expanded(child: Container()),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -67,7 +68,7 @@ class SecureWalletStep2Screen extends StatelessWidget {
                                   AdvanceToStep3Event(),
                                 );
                           },
-                          child: const Text('Start')),
+                          child: Text(AppLocalizations.of(context)!.start)),
                     ],
                   )
                 ],
@@ -87,22 +88,18 @@ class SecureWalletStep2Screen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
+        return AlertDialog(
           title: Text(
-            'What is a \'Secret Recovery Phrase\'',
+            AppLocalizations.of(context)!.whatIsSecretRecoveryPhrase,
             textAlign: TextAlign.center,
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text(AppLocalizations.of(context)!.secretPhraseExplanation1, textAlign: TextAlign.center),
+              Text(AppLocalizations.of(context)!.secretPhraseExplanation2, textAlign: TextAlign.center),
               Text(
-                  'A Secret Recovery Phrase is a set of twelve words that contains all the information about your wallet, including your funds. It\'s like a secret code used to access your entire wallet.',
-                  textAlign: TextAlign.center),
-              Text(
-                  'You must keep your Secret Recovery Phrase secret and safe. If someone gets Your Secret Recovery Phrase,they\'ll gain control over your accounts. ',
-                  textAlign: TextAlign.center),
-              Text(
-                'Save it in a place where only you can access it. If you lose it, you cannot recover it.',
+                AppLocalizations.of(context)!.secretPhraseExplanation3,
                 textAlign: TextAlign.center,
               )
             ],
@@ -117,13 +114,13 @@ class SecureWalletStep2Screen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
+        return AlertDialog(
           title: Text(
-            'Protect your wallet',
+            AppLocalizations.of(context)!.protectYourWallet,
             textAlign: TextAlign.center,
           ),
           content: Text(
-            'Don\'t risk losing your funds. Protect your wallet by saving your Secret Recovery Phrase in a place you trust.\nIt\'s the only way to recover your wallet if you get locked out of the app or get a new device.',
+            AppLocalizations.of(context)!.protectWalletDescription,
             textAlign: TextAlign.center,
           ),
           //icon: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close)),

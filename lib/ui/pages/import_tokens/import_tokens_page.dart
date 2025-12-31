@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/import_token/import_token_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/ethereum_address_text_field.dart';
@@ -90,14 +91,14 @@ class _ImportTokensPageState extends State<_ImportTokensPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Import tokens'),
+          title: Text(AppLocalizations.of(context)!.importTokens),
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              icon: Icon(Icons.close),
+              icon: const Icon(Icons.close),
             )
           ],
         ),
@@ -109,7 +110,7 @@ class _ImportTokensPageState extends State<_ImportTokensPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Token contract address',
+                AppLocalizations.of(context)!.tokenContractAddress,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               EthereumAddressTextField(
@@ -126,22 +127,22 @@ class _ImportTokensPageState extends State<_ImportTokensPage> {
                       TextField(
                         controller: _tokenNameTextFieldController,
                         decoration: InputDecoration(
-                          labelText: 'Token name',
-                          hintText: 'e.g. MyToken',
+                          labelText: AppLocalizations.of(context)!.tokenName,
+                          hintText: AppLocalizations.of(context)!.tokenNameHint,
                         ),
                       ),
                       TextField(
                         controller: _tokenSymbolTextFieldController,
                         decoration: InputDecoration(
-                          labelText: 'Token symbol',
-                          hintText: 'e.g. MYT',
+                          labelText: AppLocalizations.of(context)!.tokenSymbol,
+                          hintText: AppLocalizations.of(context)!.tokenSymbolHint,
                         ),
                       ),
                       TextField(
                         controller: _tokenDecimalsTextFieldController,
                         decoration: InputDecoration(
-                          labelText: 'Token decimals',
-                          hintText: 'e.g. 18',
+                          labelText: AppLocalizations.of(context)!.tokenDecimals,
+                          hintText: AppLocalizations.of(context)!.tokenDecimalsHint,
                         ),
                         keyboardType: TextInputType.number,
                       ),
@@ -160,9 +161,9 @@ class _ImportTokensPageState extends State<_ImportTokensPage> {
                                     ? null
                                     : () => context.read<ImportTokenBloc>().add(ImportTokenSubmitted()),
                                 child: state.importTokenStatus == ImportTokenStatus.loading
-                                    ? Text('Importing token...')
+                                    ? Text(AppLocalizations.of(context)!.importingToken)
                                     : Text(
-                                        'Import token',
+                                        AppLocalizations.of(context)!.importToken,
                                       ),
                               );
                               /* return FilledButton(

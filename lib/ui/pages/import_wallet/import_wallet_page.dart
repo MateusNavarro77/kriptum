@@ -5,6 +5,7 @@ import 'package:kriptum/blocs/import_wallet/import_wallet_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/value_objects/mnemonic.dart';
 import 'package:kriptum/domain/value_objects/password.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/home_wrapper/home_wrapper_page.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/main_title_app_bar_widget.dart';
@@ -77,9 +78,9 @@ class _ImportWalletViewState extends State<_ImportWalletView> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
-                      'Import from Secret Recovery Phrase',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                    Text(
+                      AppLocalizations.of(context)!.importFromSecretPhrase,
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
@@ -93,10 +94,10 @@ class _ImportWalletViewState extends State<_ImportWalletView> {
                         if (result.isFailure) return result.failure;
                         return null;
                       },
-                      decoration: const InputDecoration(
-                          hintText: 'Enter your Secret Recovery Phrase',
-                          label: Text('Secret Recovery Phrase'),
-                          border: OutlineInputBorder()),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.enterSecretPhrase,
+                          label: Text(AppLocalizations.of(context)!.secretRecoveryPhrase),
+                          border: const OutlineInputBorder()),
                     ),
                     const SizedBox(
                       height: 24,
@@ -110,10 +111,10 @@ class _ImportWalletViewState extends State<_ImportWalletView> {
                         if (result.isFailure) return result.failure;
                         return null;
                       },
-                      decoration: const InputDecoration(
-                        hintText: 'New Password',
-                        label: Text('New Password'),
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.newPasswordHint,
+                        label: Text(AppLocalizations.of(context)!.newPassword),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(
@@ -125,17 +126,17 @@ class _ImportWalletViewState extends State<_ImportWalletView> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (confirmPassword) {
                         if (confirmPassword != _passwordTextController.text) {
-                          return 'Passwords don\'t match';
+                          return AppLocalizations.of(context)!.passwordsDontMatch;
                         }
                         final result = Password.create(confirmPassword ?? '');
                         if (result.isFailure) return result.failure;
                         return null;
                       },
-                      decoration: const InputDecoration(
-                          hintText: 'Confirm Password',
-                          helperText: 'Must be at least 8 characters',
-                          label: Text('Confirm Password'),
-                          border: OutlineInputBorder()),
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.confirmPasswordHint,
+                          helperText: AppLocalizations.of(context)!.mustBeAtLeast8Characters,
+                          label: Text(AppLocalizations.of(context)!.confirmPassword),
+                          border: const OutlineInputBorder()),
                     ),
                     const SizedBox(
                       height: 24,
@@ -144,7 +145,7 @@ class _ImportWalletViewState extends State<_ImportWalletView> {
                         onPressed: () => _triggerImportWallet(context),
 
                         //onPressed: () {},
-                        child: const Text('IMPORT'))
+                        child: Text(AppLocalizations.of(context)!.import))
                   ],
                 ),
               ),

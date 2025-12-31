@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/create_new_wallet/create_new_wallet_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/create_new_wallet/widgets/create_password_widget.dart';
 import 'package:kriptum/ui/pages/create_new_wallet/widgets/secure_wallet_widget.dart';
 import 'package:kriptum/ui/pages/create_new_wallet/widgets/write_on_paper_widget.dart';
@@ -61,7 +62,7 @@ class CreateNewWalletView extends StatelessWidget {
               );
 
             default:
-              return const Center(child: Text('Unknown step'));
+              return Center(child: Text(AppLocalizations.of(context)!.unknownStep));
           }
         },
       ),

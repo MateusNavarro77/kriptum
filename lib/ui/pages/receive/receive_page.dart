@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/current_account/current_account_cubit.dart';
 import 'package:kriptum/config/di/injector.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/copy_to_clipboard.dart';
 import 'package:kriptum/ui/pages/scan_qr_code/scan_qr_code_page.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
@@ -41,15 +42,15 @@ class _ReceiveView extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                               child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Receive',
-                                style: TextStyle(fontSize: 24),
+                                AppLocalizations.of(context)!.receive,
+                                style: const TextStyle(fontSize: 24),
                               ),
-                              Text('Network')
+                              Text(AppLocalizations.of(context)!.network)
                             ],
                           )),
                           IconButton(
@@ -72,14 +73,14 @@ class _ReceiveView extends StatelessWidget {
                                 if (p0.first == 1) {
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                      builder: (context) => ScanQrCodePage(),
+                                      builder: (context) => const ScanQrCodePage(),
                                     ),
                                   );
                                 }
                               },
-                              segments: const [
-                                ButtonSegment<int>(value: 1, label: Text('Scan QR code')),
-                                ButtonSegment<int>(value: 2, label: Text('Your QR code'))
+                              segments: [
+                                ButtonSegment<int>(value: 1, label: Text(AppLocalizations.of(context)!.scanQrCode)),
+                                ButtonSegment<int>(value: 2, label: Text(AppLocalizations.of(context)!.yourQrCode))
                               ],
                               selected: const {
                                 2
@@ -125,15 +126,15 @@ class _ReceiveView extends StatelessWidget {
                                 onCopied: (content) {
                                   ScaffoldMessenger.of(context).clearSnackBars();
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
+                                    SnackBar(
                                       behavior: SnackBarBehavior.floating,
-                                      content: Text('Address copied to clipboard'),
+                                      content: Text(AppLocalizations.of(context)!.addressCopiedToClipboard),
                                     ),
                                   );
                                 },
                               );
                             },
-                            label: const Text('Copy address'),
+                            label: Text(AppLocalizations.of(context)!.copyAddress),
                             icon: const Icon(Icons.copy),
                           )
                         ],

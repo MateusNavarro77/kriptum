@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 
 class EraseWalletDialog extends StatelessWidget {
   final Function() onCancel;
@@ -14,15 +15,15 @@ class EraseWalletDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Column(
+      title: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
+          const Icon(
             Icons.warning_rounded,
             size: 64,
           ),
           Text(
-            'Are you sure you want to erase your wallet?',
+            AppLocalizations.of(context)!.areYouSureEraseWallet,
             textAlign: TextAlign.center,
           )
         ],
@@ -31,23 +32,21 @@ class EraseWalletDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-              'Your current wallet,accounts and assets will be removed from this app permanently. This action cannot be undone.',
-              textAlign: TextAlign.center),
+          Text(AppLocalizations.of(context)!.eraseWalletWarning1, textAlign: TextAlign.center),
           const SizedBox(
             height: 24,
           ),
-          const Text(
-              'You can ONLY recover this wallet with your Secret Recovery Phrase which must be your responsability.',
-              textAlign: TextAlign.center),
+          Text(AppLocalizations.of(context)!.eraseWalletWarning2, textAlign: TextAlign.center),
           const SizedBox(
             height: 24,
           ),
-          ElevatedButton(onPressed: isLoading ? null : () => onContinue(), child: const Text('I understand, continue')),
+          ElevatedButton(
+              onPressed: isLoading ? null : () => onContinue(),
+              child: Text(AppLocalizations.of(context)!.iUnderstandContinue)),
           const SizedBox(
             height: 12,
           ),
-          TextButton(onPressed: () => onCancel(), child: const Text('Cancel')),
+          TextButton(onPressed: () => onCancel(), child: Text(AppLocalizations.of(context)!.cancel)),
         ],
       ),
     );

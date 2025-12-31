@@ -10,6 +10,7 @@ import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc
 import 'package:kriptum/blocs/send_transaction/send_transaction_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/models/account.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/home/widgets/accounts_modal.dart';
 import 'package:kriptum/ui/pages/send_native/widgets/page_title.dart';
@@ -112,7 +113,7 @@ class _ChooseRecipientWidgetState extends State<_ChooseRecipientWidget> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'))
+              child: Text(AppLocalizations.of(context)!.cancel))
         ],
         title: BlocBuilder<CurrentNetworkCubit, CurrentNetworkState>(
           builder: (context, state) {
@@ -121,7 +122,7 @@ class _ChooseRecipientWidgetState extends State<_ChooseRecipientWidget> {
               content = state.network.name;
             }
             return PageTitle(
-              title: 'Send to',
+              title: AppLocalizations.of(context)!.sendTo,
               networkName: content,
             );
           },
@@ -138,9 +139,9 @@ class _ChooseRecipientWidgetState extends State<_ChooseRecipientWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        'From: ',
-                        style: TextStyle(fontSize: 22),
+                      Text(
+                        AppLocalizations.of(context)!.from,
+                        style: const TextStyle(fontSize: 22),
                       ),
                       Flexible(
                         child: ListTile(
@@ -218,9 +219,9 @@ class _ChooseRecipientWidgetState extends State<_ChooseRecipientWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        'To: ',
-                        style: TextStyle(fontSize: 22),
+                      Text(
+                        AppLocalizations.of(context)!.to,
+                        style: const TextStyle(fontSize: 22),
                       ),
                       Flexible(
                         child: Form(
@@ -230,8 +231,10 @@ class _ChooseRecipientWidgetState extends State<_ChooseRecipientWidget> {
                               return EthereumAddressTextField(
                                 controller: _toAddressController,
                                 inputDecoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    errorText: state.toAddressEqualsCurrentAccount ? 'Can\'t send to yourself' : null),
+                                    border: const OutlineInputBorder(),
+                                    errorText: state.toAddressEqualsCurrentAccount
+                                        ? AppLocalizations.of(context)!.cantSendToYourself
+                                        : null),
                               );
                             },
                           ),
@@ -314,7 +317,7 @@ class _ChooseRecipientWidgetState extends State<_ChooseRecipientWidget> {
                                     );
                               }
                             : null,
-                        child: const Text('Next'),
+                        child: Text(AppLocalizations.of(context)!.next),
                       );
                     },
                   ),

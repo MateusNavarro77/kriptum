@@ -6,6 +6,7 @@ import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc
 import 'package:kriptum/blocs/send_transaction/send_transaction_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/send_native/widgets/page_title.dart';
 import 'package:kriptum/ui/tokens/placeholders.dart';
@@ -69,11 +70,11 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
           builder: (context, state) {
             if (state is CurrentNetworkLoaded) {
               return PageTitle(
-                title: 'Amount',
+                title: AppLocalizations.of(context)!.amount,
                 networkName: state.network.name,
               );
             }
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           },
         ),
         centerTitle: true,
@@ -81,7 +82,7 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
             onPressed: () {
               context.read<SendTransactionBloc>().add(ReturnToRecipientSelection());
             },
-            child: const Text('Back')),
+            child: Text(AppLocalizations.of(context)!.back)),
         actions: [
           TextButton(
             onPressed: () {},
@@ -90,7 +91,7 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
                 Navigator.of(context).pop();
                 // GoRouter.of(context).pushReplacement(AppRoutes.home);
               },
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
           )
         ],
@@ -119,7 +120,8 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
                     ),
                 Align(
                     alignment: Alignment.centerRight,
-                    child: TextButton(onPressed: () => _useMax(context), child: const Text('USE MAX')))
+                    child: TextButton(
+                        onPressed: () => _useMax(context), child: Text(AppLocalizations.of(context)!.useMax)))
               ],
             ),
             const SizedBox(
@@ -149,7 +151,8 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
               if (ticker.isEmpty || balanceBloc.state.accountBalance == null) {
                 return Skeletonizer(child: Text(Placeholders.hiddenBalancePlaceholder));
               }
-              return Text('Balance: ${balanceBloc.state.accountBalance?.toEtherString(decimals: 2)} $ticker');
+              return Text(
+                  '${AppLocalizations.of(context)!.balance}: ${balanceBloc.state.accountBalance?.toEtherString(decimals: 2)} $ticker');
             }),
             // 'Balance: ${formatEther(accountBalanceController.balance)} ${currentNetworkController.currentConnectedNetwork?.ticker}'),
             Expanded(child: Container()),
@@ -177,9 +180,10 @@ class _ChooseAmountWidgetState extends State<_ChooseAmountWidget> {
                       },
                       builder: (context, state) {
                         if (state == AmountValidationStatus.validationLoading) {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         }
-                        return FilledButton(onPressed: () => _onNextStep(context), child: const Text('Next'));
+                        return FilledButton(
+                            onPressed: () => _onNextStep(context), child: Text(AppLocalizations.of(context)!.next));
                       },
                     ),
                   ),

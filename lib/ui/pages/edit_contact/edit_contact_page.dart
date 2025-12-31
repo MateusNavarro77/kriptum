@@ -4,6 +4,7 @@ import 'package:kriptum/blocs/contacts/contacts_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 
 import 'package:kriptum/domain/models/contact.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/ethereum_address_text_field.dart';
@@ -69,7 +70,7 @@ class _EditContactPageState extends State<_EditContactPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Contact'),
+        title: Text(AppLocalizations.of(context)!.editContact),
         actions: [
           IconButton(
             onPressed: _toggleViewOnlyMode,
@@ -85,7 +86,7 @@ class _EditContactPageState extends State<_EditContactPage> {
           child: ListView(
             children: [
               Text(
-                'Name',
+                AppLocalizations.of(context)!.name,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               TextFormField(
@@ -94,11 +95,11 @@ class _EditContactPageState extends State<_EditContactPage> {
                 //validator: (value) =>
                 //    ContactValidatorController.validateName(value ?? ''),
                 controller: _nameTextController,
-                decoration: const InputDecoration(hintText: 'Name'),
+                decoration: InputDecoration(hintText: AppLocalizations.of(context)!.name),
               ),
               const SizedBox(height: 24),
               Text(
-                'Address',
+                AppLocalizations.of(context)!.address,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               EthereumAddressTextField(
@@ -131,7 +132,7 @@ class _EditContactPageState extends State<_EditContactPage> {
                         final loading = state.updateStatus == ContactUpdateStatus.loading;
                         return FilledButton(
                           onPressed: loading ? null : () => _triggerEditContact(context),
-                          child: const Text('Edit contact'),
+                          child: Text(AppLocalizations.of(context)!.editContact),
                         );
                       },
                     ),
@@ -140,7 +141,7 @@ class _EditContactPageState extends State<_EditContactPage> {
                         foregroundColor: Theme.of(context).colorScheme.error,
                       ),
                       onPressed: () => _showDeleteContactModal(context),
-                      child: const Text('Delete'),
+                      child: Text(AppLocalizations.of(context)!.delete),
                     ),
                   ],
                 ),
@@ -192,7 +193,7 @@ class _EditContactPageState extends State<_EditContactPage> {
               ),
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
-                'Cancel',
+                AppLocalizations.of(context)!.cancel,
                 style: TextStyle(fontSize: buttonTextSize),
               ),
             ),
@@ -219,7 +220,7 @@ class _EditContactPageState extends State<_EditContactPage> {
                 onPressed:
                     state.deletionStatus == ContactDeletionStatus.loading ? null : () => _triggerDeleteContact(bloc),
                 child: Text(
-                  'Delete',
+                  AppLocalizations.of(context)!.delete,
                   style: TextStyle(fontSize: buttonTextSize),
                 ),
               ),

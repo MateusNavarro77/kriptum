@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/create_new_wallet/create_new_wallet_page.dart';
 import 'package:kriptum/ui/pages/import_wallet/import_wallet_page.dart';
 import 'package:kriptum/ui/widgets/app_version_text_widget.dart';
@@ -21,28 +22,29 @@ class SetupPage extends StatelessWidget {
               const SizedBox(
                 height: 24,
               ),
-              const Text(
-                'Wallet setup',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+              Text(
+                AppLocalizations.of(context)!.walletSetup,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
                 height: 24,
               ),
-              const Text(
-                'Import an existing wallet or create a new one',
+              Text(
+                AppLocalizations.of(context)!.importOrCreateWallet,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               Expanded(child: Container()),
               OutlinedButton(
                   onPressed: () => _navigateToImportWalletPage(context),
-                  child: const Text('Import using Secret Recovery Phrase')),
+                  child: Text(AppLocalizations.of(context)!.importUsingSecretPhrase)),
               const SizedBox(
                 height: 8,
               ),
               FilledButton(
-                  onPressed: () => _navigateToCreateNewWalletPage(context), child: const Text('Create a new wallet')),
+                  onPressed: () => _navigateToCreateNewWalletPage(context),
+                  child: Text(AppLocalizations.of(context)!.createNewWallet)),
               const Align(
                 alignment: Alignment.center,
                 child: AppVersionTextWidget(),

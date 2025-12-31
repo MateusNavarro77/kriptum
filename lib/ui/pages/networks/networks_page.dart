@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/networks_list.dart';
@@ -19,7 +20,7 @@ class _NetworksView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Networks'),
+        title: Text(AppLocalizations.of(context)!.networks),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(

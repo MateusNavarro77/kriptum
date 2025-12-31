@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/theme/theme_bloc.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 
 class GeneralSettingsPage extends StatelessWidget {
   const GeneralSettingsPage({super.key});
@@ -9,12 +10,12 @@ class GeneralSettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('General'),
+        title: Text(AppLocalizations.of(context)!.general),
       ),
       body: ListView(
         children: [
           ListTile(
-            title: const Text('Dark Theme'),
+            title: Text(AppLocalizations.of(context)!.darkTheme),
             trailing: BlocBuilder<ThemeBloc, ThemeState>(
               builder: (context, state) {
                 return Switch(

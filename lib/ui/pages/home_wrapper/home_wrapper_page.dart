@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/home/home_page.dart';
 import 'package:kriptum/ui/pages/receive/receive_page.dart';
 import 'package:kriptum/ui/pages/send_native/send_native_wrapper_page.dart';
@@ -33,10 +34,10 @@ class _HomeWrapperPageState extends State<HomeWrapperPage> {
                     ),
                   );
                 },
-                child: const ListTile(
-                  leading: Icon(Icons.arrow_outward_rounded),
-                  title: Text('Send'),
-                  subtitle: Text('Send crypto to any account'),
+                child: ListTile(
+                  leading: const Icon(Icons.arrow_outward_rounded),
+                  title: Text(AppLocalizations.of(context)!.send),
+                  subtitle: Text(AppLocalizations.of(context)!.sendCryptoToAccount),
                 ),
               ),
               InkWell(
@@ -49,10 +50,10 @@ class _HomeWrapperPageState extends State<HomeWrapperPage> {
                   );
                 },
                 borderRadius: BorderRadius.circular(8),
-                child: const ListTile(
-                  leading: Icon(Icons.call_received_rounded),
-                  title: Text('Receive'),
-                  subtitle: Text('Receive crypto'),
+                child: ListTile(
+                  leading: const Icon(Icons.call_received_rounded),
+                  title: Text(AppLocalizations.of(context)!.receive),
+                  subtitle: Text(AppLocalizations.of(context)!.receiveCrypto),
                 ),
               ),
             ],
@@ -67,11 +68,11 @@ class _HomeWrapperPageState extends State<HomeWrapperPage> {
   }
 
   final Map pages = {
-    0: HomePage(),
+    0: const HomePage(),
     1: Center(child: Text('Transactions')),
     2: Center(child: Text('Swap')),
     3: Center(child: Text('NFTs')),
-    4: SettingsPage(),
+    4: const SettingsPage(),
   };
   @override
   Widget build(BuildContext context) {

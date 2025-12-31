@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/app_boot/app_boot_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/setup/setup_page.dart';
 import 'package:kriptum/ui/pages/unlock_wallet/unlock_wallet_page.dart';
 
@@ -43,9 +44,9 @@ class SplashView extends StatelessWidget {
             break;
         }
       },
-      child: const Scaffold(
+      child: Scaffold(
         body: Center(
-          child: Text('Loading...'),
+          child: Text(AppLocalizations.of(context)!.loading),
         ),
       ),
     );

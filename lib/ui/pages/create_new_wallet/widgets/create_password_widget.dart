@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/create_new_wallet/create_new_wallet_bloc.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/widgets/linear_check_in_progress_bar_widget.dart';
 
 class CreatePasswordWidget extends StatelessWidget {
@@ -27,18 +28,18 @@ class CreatePasswordWidget extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                const Text(
-                  'Create password',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+                Text(
+                  AppLocalizations.of(context)!.createPassword,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
                   height: 24,
                 ),
-                const Text(
-                  'This password will unlock your Kriptum wallet only on this device',
+                Text(
+                  AppLocalizations.of(context)!.passwordUnlockDeviceOnly,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
                 const SizedBox(
                   height: 24,
@@ -53,7 +54,8 @@ class CreatePasswordWidget extends StatelessWidget {
                         );
                   },
                   obscureText: true,
-                  decoration: const InputDecoration(label: Text('New Password'), border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      label: Text(AppLocalizations.of(context)!.newPassword), border: const OutlineInputBorder()),
                 ),
                 const SizedBox(
                   height: 24,
@@ -70,10 +72,10 @@ class CreatePasswordWidget extends StatelessWidget {
                         );
                   },
                   obscureText: true,
-                  decoration: const InputDecoration(
-                      helperText: 'Must be at leaset 8 characters',
-                      label: Text('Confirm Password'),
-                      border: OutlineInputBorder()),
+                  decoration: InputDecoration(
+                      helperText: AppLocalizations.of(context)!.mustBeAtLeast8Chars,
+                      label: Text(AppLocalizations.of(context)!.confirmPassword),
+                      border: const OutlineInputBorder()),
                 ),
                 const SizedBox(
                   height: 24,
@@ -85,7 +87,7 @@ class CreatePasswordWidget extends StatelessWidget {
                           );
                     },
                     //onPressed: () => _triggerCreateWallet(context),
-                    child: const Text('Create Wallet')),
+                    child: Text(AppLocalizations.of(context)!.createWallet)),
               ],
             ),
           ),

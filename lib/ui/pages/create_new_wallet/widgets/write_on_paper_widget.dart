@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/create_new_wallet/create_new_wallet_bloc.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/home_wrapper/home_wrapper_page.dart';
 
 import 'package:kriptum/ui/widgets/linear_check_in_progress_bar_widget.dart';
@@ -41,16 +42,16 @@ class WriteOnPaperStep3Screen extends StatelessWidget {
               LinearCheckInProgressBar(
                 currentDot: 3,
               ),
-              const Text(
-                'Write down your Secret Recovery Phrase',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+              Text(
+                AppLocalizations.of(context)!.writeDownSecretPhrase,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
-              const Text(
-                'This is your Secret Recovery Phrase. Write it down on paper and keep it in a safe place. You will be asked to re-enter this phrase (in order) on the next step.',
+              Text(
+                AppLocalizations.of(context)!.writeDownDescription,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
               const SizedBox(height: 12),
               Card.outlined(
@@ -98,7 +99,9 @@ class WriteOnPaperStep3Screen extends StatelessWidget {
                     onPressed:
                         state.status == CreateNewWalletStatus.loading ? null : () => _triggerSaveAccount(context),
                     child: Text(
-                      state.status == CreateNewWalletStatus.loading ? 'Saving...' : 'I backed up my keys',
+                      state.status == CreateNewWalletStatus.loading
+                          ? AppLocalizations.of(context)!.saving
+                          : AppLocalizations.of(context)!.iBackedUpMyKeys,
                     ),
                   );
                 },

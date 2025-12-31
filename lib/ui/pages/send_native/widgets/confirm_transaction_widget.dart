@@ -7,6 +7,7 @@ import 'package:kriptum/blocs/current_native_balance/current_native_balance_bloc
 import 'package:kriptum/blocs/send_transaction/send_transaction_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/send_native/widgets/page_title.dart';
@@ -47,10 +48,10 @@ class _ConfirmTransactionWidget extends StatelessWidget {
           onPressed: () {
             context.read<SendTransactionBloc>().add(ReturnToAmountSelection());
           },
-          child: const Text('Back'),
+          child: Text(AppLocalizations.of(context)!.back),
         ),
         title: PageTitle(
-          title: 'Confirm',
+          title: AppLocalizations.of(context)!.confirm,
           networkName: '',
         ),
         actions: [
@@ -61,7 +62,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                 Navigator.of(context).pop();
                 //GoRouter.of(context).pushReplacement(AppRoutes.home);
               },
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
           )
         ],
@@ -104,7 +105,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'From: ',
+                              AppLocalizations.of(context)!.from,
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.onSurface,
                               ),
@@ -144,7 +145,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'To: ',
+                                  AppLocalizations.of(context)!.to,
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.onSurface,
                                   ),
@@ -178,7 +179,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Gas Price: ',
+                                  AppLocalizations.of(context)!.gasPrice,
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.onSurface,
                                   ),
@@ -208,7 +209,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Network fee',
+                                  AppLocalizations.of(context)!.networkFee,
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.onSurface,
                                   ),
@@ -303,7 +304,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: const Text('Cancel'),
+                          child: Text(AppLocalizations.of(context)!.cancel),
                         ),
                       ),
                       Expanded(
@@ -312,7 +313,7 @@ class _ConfirmTransactionWidget extends StatelessWidget {
                           onPressed: () {
                             _triggerSendTransaction(context);
                           },
-                          child: const Text('Confirm'),
+                          child: Text(AppLocalizations.of(context)!.confirm),
                         ),
                       ),
                     ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/import_account/import_account_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 
@@ -101,18 +102,17 @@ class __ImportAccountFromPrivateKeyPageState extends State<_ImportAccountFromPri
                                     height: 24,
                                   ),
                                   Text(
-                                    'Import account',
+                                    AppLocalizations.of(context)!.importAccount,
                                     style: Theme.of(context).textTheme.displaySmall,
                                   ),
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  const Text(
-                                      'Imported accounts are viewable in your wallet but are not recoverable with your Kriptum Secret Recovery Phrase.'),
+                                  Text(AppLocalizations.of(context)!.importedAccountsNotRecoverable),
                                   const SizedBox(
                                     height: 12,
                                   ),
-                                  const Text('Learn more about imported accounts here.')
+                                  Text(AppLocalizations.of(context)!.learnMoreImportedAccounts)
                                 ],
                               )
                             ],
@@ -133,7 +133,7 @@ class __ImportAccountFromPrivateKeyPageState extends State<_ImportAccountFromPri
                                 height: 24,
                               ),
                               Text(
-                                'Paste your private key string',
+                                AppLocalizations.of(context)!.pastePrivateKeyString,
                                 style: Theme.of(context).textTheme.headlineSmall,
                               ),
                               const SizedBox(
@@ -156,7 +156,7 @@ class __ImportAccountFromPrivateKeyPageState extends State<_ImportAccountFromPri
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   FilledButton(
-                                    child: const Text('IMPORT'),
+                                    child: Text(AppLocalizations.of(context)!.import),
                                     onPressed: () {
                                       context.read<ImportAccountBloc>().add(
                                             ImportAccountRequested(privateKey: _privateKeyTextController.text),

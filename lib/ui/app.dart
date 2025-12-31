@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kriptum/blocs/theme/theme_bloc.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/splash/splash_page.dart';
 
 class App extends StatelessWidget {
@@ -25,6 +27,16 @@ class App extends StatelessWidget {
           ),
           themeMode: state is ThemeDark ? ThemeMode.dark : ThemeMode.light,
           title: 'Kriptum',
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('pt', 'BR'),
+          ],
           navigatorKey: navigator,
           home: SplashPage(),
         );

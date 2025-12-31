@@ -1,0 +1,448 @@
+{
+    "@@locale": "en",
+    "loading": "Loading...",
+    "@loading": {
+        "description": "Loading indicator text"
+    },
+    "walletSetup": "Wallet setup",
+    "@walletSetup": {
+        "description": "Wallet setup page title"
+    },
+    "importOrCreateWallet": "Import an existing wallet or create a new one",
+    "@importOrCreateWallet": {
+        "description": "Wallet setup description"
+    },
+    "importUsingSecretPhrase": "Import using Secret Recovery Phrase",
+    "@importUsingSecretPhrase": {
+        "description": "Button to import wallet"
+    },
+    "createNewWallet": "Create a new wallet",
+    "@createNewWallet": {
+        "description": "Button to create new wallet"
+    },
+    "welcomeBack": "Welcome Back!",
+    "@welcomeBack": {
+        "description": "Unlock wallet greeting"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Password field label"
+    },
+    "unlock": "UNLOCK",
+    "@unlock": {
+        "description": "Button to unlock wallet"
+    },
+    "walletWontUnlock": "Wallet won' unlock? You can ERASE your current wallet and setup a new one",
+    "@walletWontUnlock": {
+        "description": "Reset wallet hint text"
+    },
+    "resetWallet": "Reset Wallet",
+    "@resetWallet": {
+        "description": "Button to reset wallet"
+    },
+    "createPassword": "Create password",
+    "@createPassword": {
+        "description": "Create password step title"
+    },
+    "passwordUnlockDeviceOnly": "This password will unlock your Kriptum wallet only on this device",
+    "@passwordUnlockDeviceOnly": {
+        "description": "Password creation description"
+    },
+    "newPassword": "New Password",
+    "@newPassword": {
+        "description": "New password field label"
+    },
+    "confirmPassword": "Confirm Password",
+    "@confirmPassword": {
+        "description": "Confirm password field label"
+    },
+    "mustBeAtLeast8Chars": "Must be at leaset 8 characters",
+    "@mustBeAtLeast8Chars": {
+        "description": "Password helper text"
+    },
+    "createWallet": "Create Wallet",
+    "@createWallet": {
+        "description": "Button to create wallet"
+    },
+    "secureYourWallet": "Secure your wallet",
+    "@secureYourWallet": {
+        "description": "Secure wallet step title"
+    },
+    "secureYourWalletsPhrase": "Secure your wallet's ",
+    "@secureYourWalletsPhrase": {
+        "description": "Secure wallet description part 1"
+    },
+    "secretRecoveryPhrase": "Secret Recovery Phrase",
+    "@secretRecoveryPhrase": {
+        "description": "Secret Recovery Phrase link text"
+    },
+    "whyIsItImportant": "Why is it important?",
+    "@whyIsItImportant": {
+        "description": "Why important button text"
+    },
+    "textExplainingWhyImportant": "Text Explaining why its important",
+    "@textExplainingWhyImportant": {
+        "description": "Placeholder explanation text"
+    },
+    "start": "Start",
+    "@start": {
+        "description": "Start button"
+    },
+    "whatIsSecretRecoveryPhrase": "What is a 'Secret Recovery Phrase'",
+    "@whatIsSecretRecoveryPhrase": {
+        "description": "Secret Recovery Phrase dialog title"
+    },
+    "secretPhraseExplanation1": "A Secret Recovery Phrase is a set of twelve words that contains all the information about your wallet, including your funds. It's like a secret code used to access your entire wallet.",
+    "@secretPhraseExplanation1": {
+        "description": "Secret phrase explanation paragraph 1"
+    },
+    "secretPhraseExplanation2": "You must keep your Secret Recovery Phrase secret and safe. If someone gets Your Secret Recovery Phrase,they'll gain control over your accounts. ",
+    "@secretPhraseExplanation2": {
+        "description": "Secret phrase explanation paragraph 2"
+    },
+    "secretPhraseExplanation3": "Save it in a place where only you can access it. If you lose it, you cannot recover it.",
+    "@secretPhraseExplanation3": {
+        "description": "Secret phrase explanation paragraph 3"
+    },
+    "protectYourWallet": "Protect your wallet",
+    "@protectYourWallet": {
+        "description": "Protect wallet dialog title"
+    },
+    "protectWalletDescription": "Don't risk losing your funds. Protect your wallet by saving your Secret Recovery Phrase in a place you trust.\nIt's the only way to recover your wallet if you get locked out of the app or get a new device.",
+    "@protectWalletDescription": {
+        "description": "Protect wallet dialog description"
+    },
+    "writeDownSecretPhrase": "Write down your Secret Recovery Phrase",
+    "@writeDownSecretPhrase": {
+        "description": "Write secret phrase step title"
+    },
+    "writeDownDescription": "This is your Secret Recovery Phrase. Write it down on paper and keep it in a safe place. You will be asked to re-enter this phrase (in order) on the next step.",
+    "@writeDownDescription": {
+        "description": "Write down secret phrase description"
+    },
+    "saving": "Saving...",
+    "@saving": {
+        "description": "Saving in progress text"
+    },
+    "iBackedUpMyKeys": "I backed up my keys",
+    "@iBackedUpMyKeys": {
+        "description": "Confirm backup button"
+    },
+    "unknownStep": "Unknown step",
+    "@unknownStep": {
+        "description": "Error text for unknown step"
+    },
+    "importFromSecretPhrase": "Import from Secret Recovery Phrase",
+    "@importFromSecretPhrase": {
+        "description": "Import wallet page title"
+    },
+    "enterSecretPhrase": "Enter your Secret Recovery Phrase",
+    "@enterSecretPhrase": {
+        "description": "Secret phrase field hint"
+    },
+    "newPasswordHint": "New Password",
+    "@newPasswordHint": {
+        "description": "New password field hint"
+    },
+    "confirmPasswordHint": "Confirm Password",
+    "@confirmPasswordHint": {
+        "description": "Confirm password field hint"
+    },
+    "mustBeAtLeast8Characters": "Must be at least 8 characters",
+    "@mustBeAtLeast8Characters": {
+        "description": "Password requirements helper text"
+    },
+    "import": "IMPORT",
+    "@import": {
+        "description": "Import button text"
+    },
+    "passwordsDontMatch": "Passwords don't match",
+    "@passwordsDontMatch": {
+        "description": "Password mismatch error"
+    },
+    "send": "Send",
+    "@send": {
+        "description": "Send action label"
+    },
+    "sendCryptoToAccount": "Send crypto to any account",
+    "@sendCryptoToAccount": {
+        "description": "Send action description"
+    },
+    "receive": "Receive",
+    "@receive": {
+        "description": "Receive action label"
+    },
+    "receiveCrypto": "Receive crypto",
+    "@receiveCrypto": {
+        "description": "Receive action description"
+    },
+    "transactions": "Transactions",
+    "@transactions": {
+        "description": "Transactions tab label"
+    },
+    "swap": "Swap",
+    "@swap": {
+        "description": "Swap tab label"
+    },
+    "nfts": "NFTs",
+    "@nfts": {
+        "description": "NFTs tab label"
+    },
+    "tokens": "Tokens",
+    "@tokens": {
+        "description": "Tokens tab label"
+    },
+    "comingSoon": "Coming soon...",
+    "@comingSoon": {
+        "description": "Coming soon placeholder"
+    },
+    "network": "Network",
+    "@network": {
+        "description": "Network label"
+    },
+    "scanQrCode": "Scan QR code",
+    "@scanQrCode": {
+        "description": "Scan QR code button"
+    },
+    "yourQrCode": "Your QR code",
+    "@yourQrCode": {
+        "description": "Your QR code button"
+    },
+    "addressCopiedToClipboard": "Address copied to clipboard",
+    "@addressCopiedToClipboard": {
+        "description": "Address copied snackbar message"
+    },
+    "copyAddress": "Copy address",
+    "@copyAddress": {
+        "description": "Copy address button"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "Settings page title"
+    },
+    "general": "General",
+    "@general": {
+        "description": "General settings title"
+    },
+    "generalSettingsDescription": "General settings like theming...",
+    "@generalSettingsDescription": {
+        "description": "General settings description"
+    },
+    "networks": "Networks",
+    "@networks": {
+        "description": "Networks settings title"
+    },
+    "networksDescription": "Add and edit custom RPC networks",
+    "@networksDescription": {
+        "description": "Networks settings description"
+    },
+    "contacts": "Contacts",
+    "@contacts": {
+        "description": "Contacts page title"
+    },
+    "contactsDescription": "Add, edit, remove and manage your contacts",
+    "@contactsDescription": {
+        "description": "Contacts settings description"
+    },
+    "lockWallet": "Lock Wallet",
+    "@lockWallet": {
+        "description": "Lock wallet button"
+    },
+    "darkTheme": "Dark Theme",
+    "@darkTheme": {
+        "description": "Dark theme setting label"
+    },
+    "noContacts": "No Contacts",
+    "@noContacts": {
+        "description": "Empty contacts message"
+    },
+    "addContact": "Add contact",
+    "@addContact": {
+        "description": "Add contact button"
+    },
+    "name": "Name",
+    "@name": {
+        "description": "Name field label"
+    },
+    "cannotBeEmpty": "Cannot be empty",
+    "@cannotBeEmpty": {
+        "description": "Empty field validation error"
+    },
+    "address": "Address",
+    "@address": {
+        "description": "Address field label"
+    },
+    "editContact": "Edit Contact",
+    "@editContact": {
+        "description": "Edit contact page title"
+    },
+    "delete": "Delete",
+    "@delete": {
+        "description": "Delete button"
+    },
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel button"
+    },
+    "areYouSureEraseWallet": "Are you sure you want to erase your wallet?",
+    "@areYouSureEraseWallet": {
+        "description": "Erase wallet confirmation title"
+    },
+    "eraseWalletWarning1": "Your current wallet,accounts and assets will be removed from this app permanently. This action cannot be undone.",
+    "@eraseWalletWarning1": {
+        "description": "Erase wallet warning paragraph 1"
+    },
+    "eraseWalletWarning2": "You can ONLY recover this wallet with your Secret Recovery Phrase which must be your responsability.",
+    "@eraseWalletWarning2": {
+        "description": "Erase wallet warning paragraph 2"
+    },
+    "iUnderstandContinue": "I understand, continue",
+    "@iUnderstandContinue": {
+        "description": "Confirm erase button"
+    },
+    "sendTo": "Send to",
+    "@sendTo": {
+        "description": "Send to page title"
+    },
+    "from": "From: ",
+    "@from": {
+        "description": "From label"
+    },
+    "to": "To: ",
+    "@to": {
+        "description": "To label"
+    },
+    "cantSendToYourself": "Can't send to yourself",
+    "@cantSendToYourself": {
+        "description": "Send to self validation error"
+    },
+    "myAccounts": "My accounts",
+    "@myAccounts": {
+        "description": "My accounts section header"
+    },
+    "recents": "Recents",
+    "@recents": {
+        "description": "Recents section header"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "Next button"
+    },
+    "amount": "Amount",
+    "@amount": {
+        "description": "Amount page title"
+    },
+    "back": "Back",
+    "@back": {
+        "description": "Back button"
+    },
+    "useMax": "USE MAX",
+    "@useMax": {
+        "description": "Use max button"
+    },
+    "balance": "Balance",
+    "@balance": {
+        "description": "Balance label prefix"
+    },
+    "confirm": "Confirm",
+    "@confirm": {
+        "description": "Confirm page title"
+    },
+    "gasPrice": "Gas Price: ",
+    "@gasPrice": {
+        "description": "Gas price label"
+    },
+    "networkFee": "Network fee",
+    "@networkFee": {
+        "description": "Network fee label"
+    },
+    "estimatedTotal": "Estimated Total: ",
+    "@estimatedTotal": {
+        "description": "Estimated total label"
+    },
+    "rejectTransaction": "Reject Transaction",
+    "@rejectTransaction": {
+        "description": "Reject transaction button"
+    },
+    "confirmTransaction": "Confirm Transaction",
+    "@confirmTransaction": {
+        "description": "Confirm transaction button"
+    },
+    "transactionSent": "Transaction sent",
+    "@transactionSent": {
+        "description": "Transaction sent dialog title"
+    },
+    "viewOnBlockExplorer": "View on block explorer",
+    "@viewOnBlockExplorer": {
+        "description": "View on explorer button"
+    },
+    "close": "Close",
+    "@close": {
+        "description": "Close button"
+    },
+    "importTokens": "Import tokens",
+    "@importTokens": {
+        "description": "Import tokens page title"
+    },
+    "tokenContractAddress": "Token contract address",
+    "@tokenContractAddress": {
+        "description": "Token contract address field label"
+    },
+    "tokenName": "Token name",
+    "@tokenName": {
+        "description": "Token name field label"
+    },
+    "tokenNameHint": "e.g. MyToken",
+    "@tokenNameHint": {
+        "description": "Token name field hint"
+    },
+    "tokenSymbol": "Token symbol",
+    "@tokenSymbol": {
+        "description": "Token symbol field label"
+    },
+    "tokenSymbolHint": "e.g. MYT",
+    "@tokenSymbolHint": {
+        "description": "Token symbol field hint"
+    },
+    "tokenDecimals": "Token decimals",
+    "@tokenDecimals": {
+        "description": "Token decimals field label"
+    },
+    "tokenDecimalsHint": "e.g. 18",
+    "@tokenDecimalsHint": {
+        "description": "Token decimals field hint"
+    },
+    "importingToken": "Importing token...",
+    "@importingToken": {
+        "description": "Importing token progress text"
+    },
+    "importToken": "Import token",
+    "@importToken": {
+        "description": "Import token button"
+    },
+    "importAccount": "Import account",
+    "@importAccount": {
+        "description": "Import account page title"
+    },
+    "importedAccountsNotRecoverable": "Imported accounts are viewable in your wallet but are not recoverable with your Kriptum Secret Recovery Phrase.",
+    "@importedAccountsNotRecoverable": {
+        "description": "Imported accounts warning"
+    },
+    "learnMoreImportedAccounts": "Learn more about imported accounts here.",
+    "@learnMoreImportedAccounts": {
+        "description": "Learn more link text"
+    },
+    "pastePrivateKeyString": "Paste your private key string",
+    "@pastePrivateKeyString": {
+        "description": "Private key instruction"
+    },
+    "networkChangedTo": "Network changed to {networkName}.",
+    "@networkChangedTo": {
+        "description": "Network changed snackbar message",
+        "placeholders": {
+            "networkName": {
+                "type": "String"
+            }
+        }
+    }
+}

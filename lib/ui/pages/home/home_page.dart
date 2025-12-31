@@ -6,6 +6,7 @@ import 'package:kriptum/blocs/current_account/current_account_cubit.dart';
 import 'package:kriptum/blocs/current_network/current_network_cubit.dart';
 import 'package:kriptum/blocs/erc20_tokens/erc20_tokens_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/copy_to_clipboard.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
@@ -141,10 +142,10 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
               controller: _tabController,
               tabs: [
                 Tab(
-                  text: 'Tokens',
+                  text: AppLocalizations.of(context)!.tokens,
                 ),
                 Tab(
-                  text: 'NFTs',
+                  text: AppLocalizations.of(context)!.nfts,
                 )
               ],
             ),
@@ -191,7 +192,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
                     },
                   ),
                   Center(
-                    child: Text('Coming soon...'),
+                    child: Text(AppLocalizations.of(context)!.comingSoon),
                   )
                 ],
               ),

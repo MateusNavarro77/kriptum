@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/lock_wallet/lock_wallet_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/app.dart';
 import 'package:kriptum/ui/pages/contacts/contacts_page.dart';
@@ -34,13 +35,13 @@ class _SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(AppLocalizations.of(context)!.settings),
       ),
       body: Column(
         children: [
           SettingsSubmenuCard(
-            title: 'General',
-            description: 'General settings like theming...',
+            title: AppLocalizations.of(context)!.general,
+            description: AppLocalizations.of(context)!.generalSettingsDescription,
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const GeneralSettingsPage(),
@@ -48,8 +49,8 @@ class _SettingsView extends StatelessWidget {
             ),
           ),
           SettingsSubmenuCard(
-            title: 'Networks',
-            description: 'Add and edit custom RPC networks',
+            title: AppLocalizations.of(context)!.networks,
+            description: AppLocalizations.of(context)!.networksDescription,
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const NetworksPage(),
@@ -57,8 +58,8 @@ class _SettingsView extends StatelessWidget {
             ),
           ),
           SettingsSubmenuCard(
-            title: 'Contacts',
-            description: 'Add, edit, remove and manage your contacts',
+            title: AppLocalizations.of(context)!.contacts,
+            description: AppLocalizations.of(context)!.contactsDescription,
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => const ContactsPage(),
@@ -89,7 +90,7 @@ class _SettingsView extends StatelessWidget {
                 //print(context.read<LockWalletBloc>().state);
                 return ListTile(
                   title: Text(
-                    'Lock Wallet',
+                    AppLocalizations.of(context)!.lockWallet,
                     style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
                   ),
                   onTap: () => context.read<LockWalletBloc>().add(LockWalletRequested()),
