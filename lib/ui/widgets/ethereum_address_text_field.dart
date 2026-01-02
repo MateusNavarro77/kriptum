@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:kriptum/domain/value_objects/ethereum_address/ethereum_address.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/scan_qr_code/scan_qr_code_page.dart';
 
 class EthereumAddressTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool readOnly;
   final InputDecoration inputDecoration;
-  final String hintText;
-  const EthereumAddressTextField(
-      {super.key,
-      required this.controller,
-      this.readOnly = false,
-      this.inputDecoration = const InputDecoration(),
-      this.hintText = 'Public address (0x)'});
+  final String? hintText;
+  const EthereumAddressTextField({
+    super.key,
+    required this.controller,
+    this.readOnly = false,
+    this.inputDecoration = const InputDecoration(),
+    this.hintText,
+  });
+
+  String resolveHintText(BuildContext context) =>
+      hintText ?? AppLocalizations.of(context)!.publicAddressTextFieldHintText;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,7 @@ class EthereumAddressTextField extends StatelessWidget {
         return null;
       },
       decoration: inputDecoration.copyWith(
-        hintText: hintText,
+        hintText: resolveHintText(context),
         suffixIcon: readOnly
             ? null
             : IconButton(

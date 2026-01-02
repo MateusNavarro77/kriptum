@@ -75,7 +75,7 @@ class _AddContactViewState extends State<_AddContactView> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Cannot be empty';
+                        return AppLocalizations.of(context)!.cannotBeEmpty;
                       }
                       return null;
                     },

@@ -360,4 +360,22 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get addContactPage_addContactBtnText => 'Adicionar contato';
+
+  @override
+  String get publicAddressTextFieldHintText => 'Endereço público (0x)';
+
+  @override
+  String get save => 'Salvar';
+
+  @override
+  String get accounts => 'Accounts';
+
+  @override
+  String get addOrImportAccount => 'Add or Import Account';
+
+  @override
+  String get addAccount => 'Add account';
+
+  @override
+  String get addNewAccount => 'Add new account';
 }

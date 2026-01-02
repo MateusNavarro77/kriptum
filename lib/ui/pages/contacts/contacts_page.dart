@@ -98,34 +98,6 @@ class _ContactsView extends StatelessWidget {
                     );
                   },
                 ),
-/*               child: ListenableBuilder(
-                listenable: widget.contactsController,
-                builder: (context, child) {
-                  if (widget.contactsController.contacts.isEmpty) {
-                    return Center(
-                      child: Text('No Contacts'),
-                    );
-                  }
-                  return ListView.builder(
-                    itemCount: widget.contactsController.contacts.length,
-                    itemBuilder: (context, index) {
-                      final contact = widget.contactsController.contacts[index];
-
-                      return ListTile(
-                        onTap: () => _navigateToEditContactPage(
-                            context, widget.contactsController.contacts[index]),
-                        contentPadding: EdgeInsets.zero,
-                        minLeadingWidth: 40,
-                        leading: Jazzicon.getIconWidget(
-                            Jazzicon.getJazziconData(40,
-                                address: contact.address)),
-                        title: Text(contact.name),
-                        subtitle: Text(formatAddress(contact.address)),
-                      );
-                    },
-                  );
-                },
-              ), */
               ),
               FilledButton(
                   onPressed: () {

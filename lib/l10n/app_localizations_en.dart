@@ -359,4 +359,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addContactPage_addContactBtnText => 'ADD';
+
+  @override
+  String get publicAddressTextFieldHintText => 'Public address (0x)';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get accounts => 'Accounts';
+
+  @override
+  String get addOrImportAccount => 'Add or Import Account';
+
+  @override
+  String get addAccount => 'Add account';
+
+  @override
+  String get addNewAccount => 'Add new account';
 }

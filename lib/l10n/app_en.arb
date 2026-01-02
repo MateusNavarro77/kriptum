@@ -460,5 +460,29 @@
     "addContactPage_addContactBtnText": "ADD",
     "@addContactPage_addContactBtnText": {
         "description": "Add contact page add contact button text"
+    },
+    "publicAddressTextFieldHintText": "Public address (0x)",
+    "@publicAddressTextFieldHintText": {
+        "description": "Public address text field hint text"
+    },
+    "save": "Save",
+    "@save": {
+        "description": "save"
+    },
+    "accounts": "Accounts",
+    "@accounts": {
+        "description": "Accounts modal title"
+    },
+    "addOrImportAccount": "Add or Import Account",
+    "@addOrImportAccount": {
+        "description": "Add or Import Account button text"
+    },
+    "addAccount": "Add account",
+    "@addAccount": {
+        "description": "Add account modal title"
+    },
+    "addNewAccount": "Add new account",
+    "@addNewAccount": {
+        "description": "Add new account list tile title"
     }
 }

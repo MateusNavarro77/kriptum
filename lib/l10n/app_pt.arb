@@ -113,5 +113,7 @@
     "addContactPage_title": "Adicionar contato",
     "addContactPage_name": "Nome",
     "addContactPage_address": "Endereço",
-    "addContactPage_addContactBtnText": "Adicionar contato"
+    "addContactPage_addContactBtnText": "Adicionar contato",
+    "publicAddressTextFieldHintText": "Endereço público (0x)",
+    "save": "Salvar"
 }

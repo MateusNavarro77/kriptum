@@ -775,6 +775,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'ADD'**
   String get addContactPage_addContactBtnText;
+
+  /// Public address text field hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Public address (0x)'**
+  String get publicAddressTextFieldHintText;
+
+  /// save
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// Accounts modal title
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts'**
+  String get accounts;
+
+  /// Add or Import Account button text
+  ///
+  /// In en, this message translates to:
+  /// **'Add or Import Account'**
+  String get addOrImportAccount;
+
+  /// Add account modal title
+  ///
+  /// In en, this message translates to:
+  /// **'Add account'**
+  String get addAccount;
+
+  /// Add new account list tile title
+  ///
+  /// In en, this message translates to:
+  /// **'Add new account'**
+  String get addNewAccount;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

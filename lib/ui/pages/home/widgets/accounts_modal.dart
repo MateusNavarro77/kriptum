@@ -8,6 +8,7 @@ import 'package:kriptum/blocs/current_network/current_network_cubit.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/models/account.dart';
 import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
 import 'package:kriptum/ui/pages/edit_account/edit_account_page.dart';
 import 'package:kriptum/ui/pages/import_account_from_private_key/import_account_from_private_key_page.dart';
@@ -52,7 +53,7 @@ class _AccountsModalView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Accounts',
+            AppLocalizations.of(context)!.accounts,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
@@ -106,7 +107,7 @@ class _AccountsModalView extends StatelessWidget {
               onPressed: () {
                 _showCreateOrImportAccountBottomSheet(context);
               },
-              child: const Text('Add or Import Account'),
+              child:  Text(AppLocalizations.of(context)!.addOrImportAccount),
             ),
           ),
         ],
@@ -138,7 +139,8 @@ class _AccountsModalView extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Add account',
+                    
+                    AppLocalizations.of(context)!.addAccount,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 )
@@ -173,7 +175,7 @@ class _AccountsModalView extends StatelessWidget {
                                         ),
                                       )
                                     : const Icon(Icons.add), */
-                  title: const Text('Add new account'),
+                  title: Text(AppLocalizations.of(context)!.addNewAccount),
                 );
               },
             ),
@@ -186,7 +188,7 @@ class _AccountsModalView extends StatelessWidget {
                 ));
               },
               leading: const Icon(Icons.file_download_outlined),
-              title: const Text('Import account'),
+              title: Text(AppLocalizations.of(context)!.importAccount),
             ),
           ],
         ),

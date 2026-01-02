@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kriptum/domain/models/account.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 
 class EditAccountPage extends StatefulWidget {
@@ -47,8 +48,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 children: [
                   TextField(
                     controller: _aliasNameController,
-                    decoration: const InputDecoration(
-                      label: Text('Name'),
+                    decoration: InputDecoration(
+                      label: Text(AppLocalizations.of(context)!.name),
                     ),
                   ),
                   const SizedBox(
@@ -57,8 +58,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
                   TextFormField(
                     initialValue: _accountToBeEdited.address,
                     enabled: false,
-                    decoration: const InputDecoration(
-                      label: Text('Address'),
+                    decoration: InputDecoration(
+                      label: Text(AppLocalizations.of(context)!.address),
                     ),
                   ),
                 ],
@@ -68,10 +69,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Cancel')),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(AppLocalizations.of(context)!.cancel),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       widget.onAccountEditionCompleted(
@@ -80,7 +82,7 @@ class _EditAccountPageState extends State<EditAccountPage> {
                         ),
                       );
                     },
-                    child: const Text('Save'),
+                    child: Text(AppLocalizations.of(context)!.save),
                   )
                 ],
               )
