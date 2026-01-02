@@ -1,4 +1,5 @@
 import 'package:kriptum/domain/exceptions/domain_exception.dart';
+import 'package:kriptum/domain/exceptions/invalid_current_account_state_exception.dart';
 import 'package:kriptum/domain/repositories/accounts_repository.dart';
 import 'package:kriptum/domain/repositories/erc20_token_balance_repository.dart';
 import 'package:kriptum/domain/repositories/erc20_token_repository.dart';
@@ -22,7 +23,7 @@ class GetErc20BalancesUsecase {
     final currentNetwork = await _networksRepository.getCurrentNetwork();
     final currentAccount = await _accountsRepository.getCurrentAccount();
     if (currentAccount == null) {
-      throw DomainException('Invalid Account state');
+      throw InvalidCurrentAccountStateException('Invalid Account state');
     }
     final importedTokens = await _erc20tokenRepository.getAllImportedTokensOfNetwork(currentNetwork.id!);
     final List<Future<EthereumAmount>> requests = [];

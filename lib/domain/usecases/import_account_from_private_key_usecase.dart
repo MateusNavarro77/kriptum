@@ -26,7 +26,7 @@ class ImportAccountFromPrivateKeyUsecase {
       (element) => element.address == importedAccount.address,
     );
     if (index != -1) {
-      throw DomainException('Account already saved');
+      throw AccountAlreadyExistsException('Account already saved');
     }
     await _accountsRepository.saveAccounts([importedAccount]);
   }
@@ -36,4 +36,8 @@ class ImportAccountFromPrivateKeyInput {
   final String privateKey;
 
   ImportAccountFromPrivateKeyInput({required this.privateKey});
+}
+
+class AccountAlreadyExistsException extends DomainException {
+  AccountAlreadyExistsException(super.message);
 }

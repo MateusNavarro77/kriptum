@@ -31,7 +31,7 @@ class ImportErc20TokenUsecase {
     }
     final currentNetwork = await _networksRepository.getCurrentNetwork();
     final foundTokenWithAddress = await _erc20tokenRepository.findByAddress(ethAddressResult.value!.value);
-    if (foundTokenWithAddress != null) throw DomainException('Token already imported');
+    if (foundTokenWithAddress != null) throw Erc20TokenAlreadyImportedException('Token already imported');
     final erc20Token = Erc20Token(
       address: ethAddressResult.value!.value,
       name: nameResult.value?.value,
@@ -55,4 +55,8 @@ class ImportErc20TokenInput {
     required this.decimals,
     required this.contractAddress,
   });
+}
+
+class Erc20TokenAlreadyImportedException extends DomainException {
+  Erc20TokenAlreadyImportedException(super.message);
 }
