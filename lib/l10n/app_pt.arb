@@ -126,5 +126,6 @@
     "date": "Data",
     "confirmed": "Confirmado",
     "status": "Status",
-    "addNetwork": "Adicionar rede"
+    "addNetwork": "Adicionar rede",
+    "yourAccounts": "Suas Contas"
 }

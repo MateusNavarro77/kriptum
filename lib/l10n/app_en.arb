@@ -522,5 +522,9 @@
     "addNetwork": "Add Network",
     "@addNetwork": {
         "description": "Add Network button text"
+    },
+    "yourAccounts": "Your Accounts",
+    "@yourAccounts": {
+        "description": "Your Accounts section header"
     }
 }

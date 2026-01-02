@@ -402,4 +402,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addNetwork => 'Add Network';
+
+  @override
+  String get yourAccounts => 'Your Accounts';
 }

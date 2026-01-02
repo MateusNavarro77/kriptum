@@ -403,4 +403,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get addNetwork => 'Adicionar rede';
+
+  @override
+  String get yourAccounts => 'Suas Contas';
 }

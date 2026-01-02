@@ -853,6 +853,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Network'**
   String get addNetwork;
+
+  /// Your Accounts section header
+  ///
+  /// In en, this message translates to:
+  /// **'Your Accounts'**
+  String get yourAccounts;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
