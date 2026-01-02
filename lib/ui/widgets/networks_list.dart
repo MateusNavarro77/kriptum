@@ -122,7 +122,7 @@ class _NetworksListState extends State<_NetworksList> {
           ),
           FilledButton(
             onPressed: () {},
-            child:  Text(AppLocalizations.of(context)!.addNetwork),
+            child: Text(AppLocalizations.of(context)!.addNetwork),
           )
         ],
       ),

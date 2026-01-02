@@ -107,7 +107,7 @@ class _AccountsModalView extends StatelessWidget {
               onPressed: () {
                 _showCreateOrImportAccountBottomSheet(context);
               },
-              child:  Text(AppLocalizations.of(context)!.addOrImportAccount),
+              child: Text(AppLocalizations.of(context)!.addOrImportAccount),
             ),
           ),
         ],
@@ -139,7 +139,6 @@ class _AccountsModalView extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    
                     AppLocalizations.of(context)!.addAccount,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),

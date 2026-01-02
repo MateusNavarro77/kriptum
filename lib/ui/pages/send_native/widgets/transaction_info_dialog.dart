@@ -7,7 +7,6 @@ import 'package:kriptum/shared/utils/copy_to_clipboard.dart';
 import 'package:kriptum/shared/utils/extensions/date_time_extension.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
 import 'package:kriptum/shared/utils/url_launcher_utils.dart';
-import 'package:kriptum/ui/app.dart';
 
 class TransactionInfoDialog extends StatefulWidget {
   const TransactionInfoDialog({
@@ -172,8 +171,8 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                AppLocalizations.of(context)!
-                                    .viewOnBlockExplorerPlaceholder(widget.network.blockExplorerName ?? 'Block Explorer'),
+                                AppLocalizations.of(context)!.viewOnBlockExplorerPlaceholder(
+                                    widget.network.blockExplorerName ?? 'Block Explorer'),
                                 textAlign: TextAlign.center,
                               ),
                             ],

@@ -12,7 +12,6 @@ import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/models/account.dart';
 import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/show_snack_bar.dart';
-import 'package:kriptum/ui/app.dart';
 import 'package:kriptum/ui/pages/home/widgets/accounts_modal.dart';
 import 'package:kriptum/ui/pages/send_native/widgets/page_title.dart';
 import 'package:kriptum/ui/tokens/placeholders.dart';
