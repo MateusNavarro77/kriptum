@@ -115,5 +115,16 @@
     "addContactPage_address": "Endereço",
     "addContactPage_addContactBtnText": "Adicionar contato",
     "publicAddressTextFieldHintText": "Endereço público (0x)",
-    "save": "Salvar"
+    "save": "Salvar",
+    "accounts": "Contas",
+    "addOrImportAccount": "Adicionar ou importar conta",
+    "addAccount": "Adicionar conta",
+    "addNewAccount": "Adicionar nova conta",
+    "sentAmount": "Valor enviado",
+    "viewOnBlockExplorerPlaceholder": "Acompanhar em {blockExplorerName}",
+    "transactionHash": "Hash da transação",
+    "date": "Data",
+    "confirmed": "Confirmado",
+    "status": "Status",
+    "addNetwork": "Adicionar rede"
 }

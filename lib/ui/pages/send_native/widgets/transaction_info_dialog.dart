@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:kriptum/domain/models/account.dart';
 import 'package:kriptum/domain/models/network.dart';
 import 'package:kriptum/domain/value_objects/ethereum_amount.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/shared/utils/copy_to_clipboard.dart';
 import 'package:kriptum/shared/utils/extensions/date_time_extension.dart';
 import 'package:kriptum/shared/utils/format_address.dart';
 import 'package:kriptum/shared/utils/url_launcher_utils.dart';
+import 'package:kriptum/ui/app.dart';
 
 class TransactionInfoDialog extends StatefulWidget {
   const TransactionInfoDialog({
@@ -59,17 +61,17 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Status',
+                            AppLocalizations.of(context)!.status,
                             style: labelStyle,
                           ),
-                          const Text('Confirmed'),
+                          Text(AppLocalizations.of(context)!.confirmed),
                         ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            'Date',
+                            AppLocalizations.of(context)!.date,
                             style: labelStyle,
                           ),
                           Text(widget.dateTime.toReadableString()),
@@ -85,7 +87,7 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'From',
+                            AppLocalizations.of(context)!.from,
                             style: labelStyle,
                           ),
                           Text(formatAddress(widget.from.address)),
@@ -94,7 +96,10 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text('To', style: labelStyle),
+                          Text(
+                            AppLocalizations.of(context)!.to,
+                            style: labelStyle,
+                          ),
                           Text(formatAddress(widget.toAddress)),
                         ],
                       ),
@@ -103,7 +108,7 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                   const Divider(),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Transaction Hash'),
+                    title: Text(AppLocalizations.of(context)!.transactionHash),
                     subtitle: Text(
                       widget.transactionHash,
                       overflow: TextOverflow.clip,
@@ -150,7 +155,7 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                   const Divider(),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    title: const Text('Amount'),
+                    title: Text(AppLocalizations.of(context)!.amount),
                     trailing: Text(
                       '${EthereumAmount.fromWei(widget.amount).toEtherString(decimals: 2)} ${widget.network.ticker}',
                       style: Theme.of(context).textTheme.bodyMedium,
@@ -167,8 +172,10 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                  textAlign: TextAlign.center,
-                                  'View on ${widget.network.blockExplorerName ?? 'Block Explorer'}'),
+                                AppLocalizations.of(context)!
+                                    .viewOnBlockExplorerPlaceholder(widget.network.blockExplorerName ?? 'Block Explorer'),
+                                textAlign: TextAlign.center,
+                              ),
                             ],
                           ))
                       : Container(),
@@ -179,7 +186,9 @@ class _TransactionInfoDialogState extends State<TransactionInfoDialog> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Sent ${widget.network.ticker}'),
+              Text(
+                AppLocalizations.of(context)!.sentAmount(widget.network.ticker),
+              ),
               IconButton(
                   onPressed: () {
                     Navigator.of(context).pop();

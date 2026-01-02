@@ -377,4 +377,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addNewAccount => 'Add new account';
+
+  @override
+  String sentAmount(String ticker) {
+    return 'Sent $ticker';
+  }
+
+  @override
+  String viewOnBlockExplorerPlaceholder(String blockExplorerName) {
+    return 'View on $blockExplorerName';
+  }
+
+  @override
+  String get transactionHash => 'Transaction Hash';
+
+  @override
+  String get date => 'Date';
+
+  @override
+  String get confirmed => 'Confirmed';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get addNetwork => 'Add Network';
 }

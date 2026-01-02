@@ -368,14 +368,39 @@ class AppLocalizationsPt extends AppLocalizations {
   String get save => 'Salvar';
 
   @override
-  String get accounts => 'Accounts';
+  String get accounts => 'Contas';
 
   @override
-  String get addOrImportAccount => 'Add or Import Account';
+  String get addOrImportAccount => 'Adicionar ou importar conta';
 
   @override
-  String get addAccount => 'Add account';
+  String get addAccount => 'Adicionar conta';
 
   @override
-  String get addNewAccount => 'Add new account';
+  String get addNewAccount => 'Adicionar nova conta';
+
+  @override
+  String sentAmount(String ticker) {
+    return 'Valor enviado';
+  }
+
+  @override
+  String viewOnBlockExplorerPlaceholder(String blockExplorerName) {
+    return 'Acompanhar em $blockExplorerName';
+  }
+
+  @override
+  String get transactionHash => 'Hash da transação';
+
+  @override
+  String get date => 'Data';
+
+  @override
+  String get confirmed => 'Confirmado';
+
+  @override
+  String get status => 'Status';
+
+  @override
+  String get addNetwork => 'Adicionar rede';
 }

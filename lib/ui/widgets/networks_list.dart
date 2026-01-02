@@ -4,6 +4,7 @@ import 'package:kriptum/blocs/current_network/current_network_cubit.dart';
 import 'package:kriptum/blocs/networks_list/networks_list_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/models/network.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/widgets/network_list_tile.dart';
 
 class NetworksList extends StatelessWidget {
@@ -121,7 +122,7 @@ class _NetworksListState extends State<_NetworksList> {
           ),
           FilledButton(
             onPressed: () {},
-            child: const Text('Add Network'),
+            child:  Text(AppLocalizations.of(context)!.addNetwork),
           )
         ],
       ),

@@ -811,6 +811,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add new account'**
   String get addNewAccount;
+
+  /// Sent amount title
+  ///
+  /// In en, this message translates to:
+  /// **'Sent {ticker}'**
+  String sentAmount(String ticker);
+
+  /// View on block explorer button text
+  ///
+  /// In en, this message translates to:
+  /// **'View on {blockExplorerName}'**
+  String viewOnBlockExplorerPlaceholder(String blockExplorerName);
+
+  /// Transaction Hash label
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction Hash'**
+  String get transactionHash;
+
+  /// Date label
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get date;
+
+  /// Confirmed label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get confirmed;
+
+  /// Status label
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  /// Add Network button text
+  ///
+  /// In en, this message translates to:
+  /// **'Add Network'**
+  String get addNetwork;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

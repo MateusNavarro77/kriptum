@@ -484,5 +484,43 @@
     "addNewAccount": "Add new account",
     "@addNewAccount": {
         "description": "Add new account list tile title"
+    },
+    "sentAmount": "Sent {ticker}",
+    "@sentAmount": {
+        "description": "Sent amount title",
+        "placeholders": {
+            "ticker": {
+                "type": "String"
+            }
+        }
+    },
+    "viewOnBlockExplorerPlaceholder": "View on {blockExplorerName}",
+    "@viewOnBlockExplorerPlaceholder": {
+        "description": "View on block explorer button text",
+        "placeholders": {
+            "blockExplorerName": {
+                "type": "String"
+            }
+        }
+    },
+    "transactionHash": "Transaction Hash",
+    "@transactionHash": {
+        "description": "Transaction Hash label"
+    },
+    "date": "Date",
+    "@date": {
+        "description": "Date label"
+    },
+    "confirmed": "Confirmed",
+    "@confirmed": {
+        "description": "Confirmed label"
+    },
+    "status": "Status",
+    "@status": {
+        "description": "Status label"
+    },
+    "addNetwork": "Add Network",
+    "@addNetwork": {
+        "description": "Add Network button text"
     }
 }

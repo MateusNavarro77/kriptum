@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/pages/receive/receive_page.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/scan_qr_code_widget.dart';
@@ -77,9 +78,15 @@ class ScanQrCodePage extends StatelessWidget {
                                 );
                               }
                             },
-                            segments: const [
-                              ButtonSegment<int>(value: 1, label: Text('Scan QR code')),
-                              ButtonSegment<int>(value: 2, label: Text('Your QR code'))
+                            segments: [
+                              ButtonSegment<int>(
+                                value: 1,
+                                label: Text(AppLocalizations.of(context)!.scanQrCode),
+                              ),
+                              ButtonSegment<int>(
+                                value: 2,
+                                label: Text(AppLocalizations.of(context)!.yourQrCode),
+                              )
                             ],
                             selected: const {
                               1
