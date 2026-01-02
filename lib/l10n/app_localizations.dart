@@ -751,6 +751,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Network changed to {networkName}.'**
   String networkChangedTo(String networkName);
+
+  /// Add contact page title
+  ///
+  /// In en, this message translates to:
+  /// **'Add Contact'**
+  String get addContactPage_title;
+
+  /// Add contact page name field label
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get addContactPage_name;
+
+  /// Add contact page address field label
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get addContactPage_address;
+
+  /// Add contact page add contact button text
+  ///
+  /// In en, this message translates to:
+  /// **'ADD'**
+  String get addContactPage_addContactBtnText;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

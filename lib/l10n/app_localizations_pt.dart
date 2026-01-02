@@ -348,4 +348,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String networkChangedTo(String networkName) {
     return 'Rede alterada para $networkName.';
   }
+
+  @override
+  String get addContactPage_title => 'Adicionar contato';
+
+  @override
+  String get addContactPage_name => 'Nome';
+
+  @override
+  String get addContactPage_address => 'Endereço';
+
+  @override
+  String get addContactPage_addContactBtnText => 'Adicionar contato';
 }

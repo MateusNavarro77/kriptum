@@ -347,4 +347,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String networkChangedTo(String networkName) {
     return 'Network changed to $networkName.';
   }
+
+  @override
+  String get addContactPage_title => 'Add Contact';
+
+  @override
+  String get addContactPage_name => 'Name';
+
+  @override
+  String get addContactPage_address => 'Address';
+
+  @override
+  String get addContactPage_addContactBtnText => 'ADD';
 }

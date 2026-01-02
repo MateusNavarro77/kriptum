@@ -444,5 +444,21 @@
                 "type": "String"
             }
         }
+    },
+    "addContactPage_title": "Add Contact",
+    "@addContactPage_title": {
+        "description": "Add contact page title"
+    },
+    "addContactPage_name": "Name",
+    "@addContactPage_name": {
+        "description": "Add contact page name field label"
+    },
+    "addContactPage_address": "Address",
+    "@addContactPage_address": {
+        "description": "Add contact page address field label"
+    },
+    "addContactPage_addContactBtnText": "ADD",
+    "@addContactPage_addContactBtnText": {
+        "description": "Add contact page add contact button text"
     }
 }

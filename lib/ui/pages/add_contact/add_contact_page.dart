@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kriptum/blocs/add_contact/add_contact_bloc.dart';
 import 'package:kriptum/config/di/injector.dart';
 import 'package:kriptum/domain/models/contact.dart';
+import 'package:kriptum/l10n/app_localizations.dart';
 import 'package:kriptum/ui/tokens/spacings.dart';
 import 'package:kriptum/ui/widgets/ethereum_address_text_field.dart';
 
@@ -55,7 +56,7 @@ class _AddContactViewState extends State<_AddContactView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Add Contact'),
+          title: Text(AppLocalizations.of(context)!.addContactPage_title),
         ),
         body: SafeArea(
           child: Padding(
@@ -67,7 +68,7 @@ class _AddContactViewState extends State<_AddContactView> {
               child: ListView(
                 children: [
                   Text(
-                    'Name',
+                    AppLocalizations.of(context)!.addContactPage_name,
                     style: labelStyle,
                   ),
                   TextFormField(
@@ -79,17 +80,19 @@ class _AddContactViewState extends State<_AddContactView> {
                       return null;
                     },
                     controller: _nameTextController,
-                    decoration: const InputDecoration(hintText: 'Name'),
+                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.addContactPage_name),
                   ),
                   const SizedBox(
                     height: 24,
                   ),
-                  Text('Address', style: labelStyle),
+                  Text(AppLocalizations.of(context)!.addContactPage_address, style: labelStyle),
                   EthereumAddressTextField(controller: _addressTextController),
                   const SizedBox(
                     height: 24,
                   ),
-                  FilledButton(onPressed: () => _triggerAddContact(context), child: const Text('Add Contact'))
+                  FilledButton(
+                      onPressed: () => _triggerAddContact(context),
+                      child: Text(AppLocalizations.of(context)!.addContactPage_addContactBtnText))
                 ],
               ),
             ),

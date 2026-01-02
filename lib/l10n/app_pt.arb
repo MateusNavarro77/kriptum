@@ -109,5 +109,9 @@
     "importedAccountsNotRecoverable": "As contas importadas podem ser visualizadas em sua carteira, mas não podem ser recuperadas com sua Frase de Recuperação Secreta Kriptum.",
     "learnMoreImportedAccounts": "Saiba mais sobre contas importadas aqui.",
     "pastePrivateKeyString": "Cole sua string de chave privada",
-    "networkChangedTo": "Rede alterada para {networkName}."
+    "networkChangedTo": "Rede alterada para {networkName}.",
+    "addContactPage_title": "Adicionar contato",
+    "addContactPage_name": "Nome",
+    "addContactPage_address": "Endereço",
+    "addContactPage_addContactBtnText": "Adicionar contato"
 }
